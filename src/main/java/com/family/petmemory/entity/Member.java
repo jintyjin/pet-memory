@@ -1,30 +1,42 @@
 package com.family.petmemory.entity;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
 public class Member {
 
+    @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
+
     private String name;
-    private LocalDateTime joinTime;
-    private LocalDateTime deleteTime;
+
+    @Embedded
+    private MemberTime memberTime;
+
+    @OneToMany(mappedBy = "member")
+    private List<Pet> pets = new ArrayList<>();
+
     private boolean isDelete;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-        this.joinTime = LocalDateTime.now();
-        this.isDelete = false;
+    protected Member() {
     }
 
     public Member(String name) {
         this.name = name;
-        this.joinTime = LocalDateTime.now();
+        this.memberTime = new MemberTime(LocalDateTime.now());
         this.isDelete = false;
     }
 
     public void delete() {
-        this.deleteTime = LocalDateTime.now();
+        this.memberTime.delete(LocalDateTime.now());
         this.isDelete = true;
     }
 }
