@@ -39,4 +39,8 @@ public class Member {
         this.memberTime.delete(LocalDateTime.now());
         this.isDelete = true;
     }
+
+    public void addPet(Pet pet) {
+        this.pets.add(pet);
+    }
 }

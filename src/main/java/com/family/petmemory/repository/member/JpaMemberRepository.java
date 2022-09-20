@@ -4,6 +4,7 @@ import com.family.petmemory.entity.Member;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class JpaMemberRepository implements MemberRepository {
@@ -17,7 +18,13 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member find(Long id) {
+    public Member findOne(Long id) {
         return em.find(Member.class, id);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return em.createQuery("select m from Member m", Member.class)
+                .getResultList();
     }
 }
