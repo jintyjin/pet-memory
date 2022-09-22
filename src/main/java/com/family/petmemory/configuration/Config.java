@@ -2,6 +2,8 @@ package com.family.petmemory.configuration;
 
 import com.family.petmemory.repository.member.JpaMemberRepository;
 import com.family.petmemory.repository.member.MemberRepository;
+import com.family.petmemory.repository.pet.JpaPetRepository;
+import com.family.petmemory.repository.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,5 +19,10 @@ public class Config {
     @Bean
     public MemberRepository memberRepository() {
         return new JpaMemberRepository(em);
+    }
+
+    @Bean
+    public PetRepository petRepository() {
+        return new JpaPetRepository(em);
     }
 }

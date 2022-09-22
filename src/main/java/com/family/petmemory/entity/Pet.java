@@ -17,7 +17,7 @@ public class Pet {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -27,7 +27,7 @@ public class Pet {
     @Embedded
     private TogetherTime togetherTime;
 
-    private boolean isLeave;
+    private PetStatus petStatus;
 
     protected Pet() {
     }
@@ -35,12 +35,13 @@ public class Pet {
     public Pet(String name, Member member, LocalDateTime bornTime) {
         this.name = name;
         this.member = member;
+        this.member.addPet(this);
         this.togetherTime = new TogetherTime(bornTime);
-        this.isLeave = false;
+        this.petStatus = PetStatus.NORMAL;
     }
 
     public void leave(LocalDateTime leaveTime) {
         this.togetherTime.leave(leaveTime);
-        this.isLeave = true;
+        this.petStatus = PetStatus.LEAVE;
     }
 }

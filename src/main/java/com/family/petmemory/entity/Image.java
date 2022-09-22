@@ -18,11 +18,11 @@ public class Image {
     @Embedded
     private ManageTime manageTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    private boolean isDelete;
+    private ImageStatus imageStatus;
 
     protected Image() {
     }
@@ -30,11 +30,11 @@ public class Image {
     public Image(String path) {
         this.path = path;
         this.manageTime = new ManageTime(LocalDateTime.now());
-        this.isDelete = false;
+        this.imageStatus = ImageStatus.NORMAL;
     }
 
     public void delete() {
         this.manageTime.delete(LocalDateTime.now());
-        this.isDelete = true;
+        this.imageStatus = ImageStatus.DELETE;
     }
 }
