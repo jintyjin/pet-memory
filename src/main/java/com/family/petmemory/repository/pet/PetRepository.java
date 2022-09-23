@@ -1,10 +1,9 @@
 package com.family.petmemory.repository.pet;
 
-import com.family.petmemory.entity.Member;
-import com.family.petmemory.entity.Pet;
+import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.pet.Pet;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PetRepository {
 

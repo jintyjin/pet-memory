@@ -1,8 +1,7 @@
 package com.family.petmemory.repository.member;
 
-import com.family.petmemory.entity.Member;
-import com.family.petmemory.entity.MemberStatus;
-import org.assertj.core.api.Assertions;
+import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.member.MemberStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +20,15 @@ class JpaMemberRepositoryTest {
 
     @Test
     @Transactional
+    @Rollback(value = false)
     public void 회원가입() {
         //given
         Member member = new Member("memberA", "주인1", "암호");
+        Member member2 = new Member("memberB", "주인2", "암호1");
 
         //when
         Long savedId = memberRepository.save(member);
+        memberRepository.save(member2);
         Member findMember = memberRepository.findById(savedId);
 
         //then

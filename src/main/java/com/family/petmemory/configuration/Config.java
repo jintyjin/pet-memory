@@ -1,5 +1,7 @@
 package com.family.petmemory.configuration;
 
+import com.family.petmemory.repository.image.ImageRepository;
+import com.family.petmemory.repository.image.JpaImageRepository;
 import com.family.petmemory.repository.member.JpaMemberRepository;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.JpaPetRepository;
@@ -24,5 +26,10 @@ public class Config {
     @Bean
     public PetRepository petRepository() {
         return new JpaPetRepository(em);
+    }
+
+    @Bean
+    public ImageRepository imageRepository() {
+        return new JpaImageRepository(em);
     }
 }

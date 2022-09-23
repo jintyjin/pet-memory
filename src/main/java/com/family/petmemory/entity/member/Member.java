@@ -1,7 +1,7 @@
-package com.family.petmemory.entity;
+package com.family.petmemory.entity.member;
 
+import com.family.petmemory.entity.pet.Pet;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "login_id")
+    @Column(name = "login_id", unique = true)
     private String loginId;
 
     private String password;

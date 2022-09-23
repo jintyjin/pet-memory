@@ -1,6 +1,6 @@
 package com.family.petmemory.repository.member;
 
-import com.family.petmemory.entity.Member;
+import com.family.petmemory.entity.member.Member;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -30,6 +30,13 @@ public class JpaMemberRepository implements MemberRepository {
                 .getResultList()
                 .stream()
                 .findAny();
+    }
+
+    @Override
+    public List<Member> findByName(String name) {
+        return em.createQuery("select m from Member m where m.name = :name")
+                .setParameter("name", name)
+                .getResultList();
     }
 
     @Override

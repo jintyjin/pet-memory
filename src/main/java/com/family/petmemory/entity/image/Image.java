@@ -1,5 +1,6 @@
-package com.family.petmemory.entity;
+package com.family.petmemory.entity.image;
 
+import com.family.petmemory.entity.pet.Pet;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -22,13 +23,16 @@ public class Image {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
+    @Enumerated(EnumType.STRING)
     private ImageStatus imageStatus;
 
     protected Image() {
     }
 
-    public Image(String path) {
+    public Image(String path, Pet pet) {
         this.path = path;
+        this.pet = pet;
+        this.pet.addImage(this);
         this.manageTime = new ManageTime(LocalDateTime.now());
         this.imageStatus = ImageStatus.NORMAL;
     }

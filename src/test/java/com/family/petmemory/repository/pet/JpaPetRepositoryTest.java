@@ -1,7 +1,7 @@
 package com.family.petmemory.repository.pet;
 
-import com.family.petmemory.entity.Member;
-import com.family.petmemory.entity.Pet;
+import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JpaPetRepositoryTest {

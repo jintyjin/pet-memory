@@ -1,5 +1,7 @@
-package com.family.petmemory.entity;
+package com.family.petmemory.entity.pet;
 
+import com.family.petmemory.entity.image.Image;
+import com.family.petmemory.entity.member.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -27,6 +29,7 @@ public class Pet {
     @Embedded
     private TogetherTime togetherTime;
 
+    @Enumerated(EnumType.STRING)
     private PetStatus petStatus;
 
     protected Pet() {
@@ -43,5 +46,9 @@ public class Pet {
     public void leave(LocalDateTime leaveTime) {
         this.togetherTime.leave(leaveTime);
         this.petStatus = PetStatus.LEAVE;
+    }
+
+    public void addImage(Image image) {
+        this.images.add(image);
     }
 }

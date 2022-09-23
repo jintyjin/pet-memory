@@ -1,12 +1,11 @@
 package com.family.petmemory.repository.pet;
 
-import com.family.petmemory.entity.Member;
-import com.family.petmemory.entity.Pet;
+import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.pet.Pet;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JpaPetRepository implements PetRepository {
