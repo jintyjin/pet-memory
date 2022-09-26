@@ -32,15 +32,18 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
 
+    private String email;
+
     protected Member() {
     }
 
-    public Member(String loginId, String name, String password) {
+    public Member(String loginId, String name, String password, String email) {
         this.loginId = loginId;
         this.name = name;
         this.password = password;
         this.memberTime = new MemberTime(LocalDateTime.now());
         this.memberStatus = MemberStatus.NORMAL;
+        this.email = email;
     }
 
     public void delete() {

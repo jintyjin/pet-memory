@@ -20,11 +20,10 @@ class JpaMemberRepositoryTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     public void 회원가입() {
         //given
-        Member member = new Member("memberA", "주인1", "암호");
-        Member member2 = new Member("memberB", "주인2", "암호1");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
+        Member member2 = new Member("memberB", "주인2", "암호1", "jin@naver.com");
 
         //when
         Long savedId = memberRepository.save(member);
@@ -40,7 +39,7 @@ class JpaMemberRepositoryTest {
     @Transactional
     public void 회원검색() {
         //given
-        Member member = new Member("memberA", "주인1", "암호");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
         memberRepository.save(member);
 
         //when
@@ -54,7 +53,7 @@ class JpaMemberRepositoryTest {
     @Transactional
     public void 회원삭제() {
         //given
-        Member member = new Member("memberA", "주인1", "암호");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
         memberRepository.save(member);
 
         //when
