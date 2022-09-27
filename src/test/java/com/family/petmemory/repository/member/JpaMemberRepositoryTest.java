@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -22,8 +23,8 @@ class JpaMemberRepositoryTest {
     @Transactional
     public void 회원가입() {
         //given
-        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
-        Member member2 = new Member("memberB", "주인2", "암호1", "jin@naver.com");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com", LocalDateTime.now());
+        Member member2 = new Member("memberB", "주인2", "암호1", "jin@naver.com", LocalDateTime.now());
 
         //when
         Long savedId = memberRepository.save(member);
@@ -39,7 +40,7 @@ class JpaMemberRepositoryTest {
     @Transactional
     public void 회원검색() {
         //given
-        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com", LocalDateTime.now());
         memberRepository.save(member);
 
         //when
@@ -53,7 +54,7 @@ class JpaMemberRepositoryTest {
     @Transactional
     public void 회원삭제() {
         //given
-        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com", LocalDateTime.now());
         memberRepository.save(member);
 
         //when

@@ -34,16 +34,19 @@ public class Member {
 
     private String email;
 
+    private LocalDateTime birth;
+
     protected Member() {
     }
 
-    public Member(String loginId, String name, String password, String email) {
+    public Member(String loginId, String name, String password, String email, LocalDateTime birth) {
         this.loginId = loginId;
         this.name = name;
         this.password = password;
         this.memberTime = new MemberTime(LocalDateTime.now());
         this.memberStatus = MemberStatus.NORMAL;
         this.email = email;
+        this.birth = birth;
     }
 
     public void delete() {

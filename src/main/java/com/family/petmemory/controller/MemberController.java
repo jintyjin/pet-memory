@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class MemberController {
             return "/members/createMemberForm";
         }
 
-        Member member = new Member(memberForm.getLoginId(), memberForm.getName(), memberForm.getPassword(), memberForm.getEmail());
+        Member member = new Member(memberForm.getLoginId(), memberForm.getName(), memberForm.getPassword(), memberForm.getEmail(), memberForm.getBirth());
         memberService.join(member);
 
         return "redirect:/";

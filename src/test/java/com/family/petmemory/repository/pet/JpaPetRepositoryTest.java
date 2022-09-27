@@ -26,7 +26,7 @@ class JpaPetRepositoryTest {
     @Rollback(value = false)
     public void 펫등록() {
         //given
-        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com");
+        Member member = new Member("memberA", "주인1", "암호", "jin@naver.com", LocalDateTime.now());
         memberRepository.save(member);
         Pet pet = new Pet("닥스훈트", member, LocalDateTime.now());
 
@@ -44,14 +44,14 @@ class JpaPetRepositoryTest {
     @Rollback(value = false)
     public void 펫모아보기() {
         //given
-        Member member1 = new Member("memberA", "주인1", "암호1", "jin@naver.com");
+        Member member1 = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDateTime.now());
         memberRepository.save(member1);
         Pet pet1 = new Pet("닥스훈트1", member1, LocalDateTime.now());
         Pet pet2 = new Pet("닥스훈트2", member1, LocalDateTime.now());
         petRepository.save(pet1);
         petRepository.save(pet2);
 
-        Member member2 = new Member("memberB", "주인2", "암호2", "jin@naver.com");
+        Member member2 = new Member("memberB", "주인2", "암호2", "jin@naver.com", LocalDateTime.now());
         memberRepository.save(member2);
         Pet pet3 = new Pet("닥스훈트3", member2, LocalDateTime.now());
         petRepository.save(pet3);

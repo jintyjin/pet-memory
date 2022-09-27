@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>회원 가입</title>
+<!--    <title>회원 가입</title>-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <style>
@@ -20,11 +20,11 @@
 <body>
     <div class="container">
         <div class="py-5 text-center">
-            <h2>회원 가입</h2>
+            <h2 th:text="#{page.createMemberForm}">회원 가입</h2>
         </div>
         <form action="" th:action th:object="${memberForm}" method="post">
             <div>
-                <label for="name" class="form-label">이름</label>
+                <label for="name" class="form-label" th:text="#{label.member.name}">이름</label>
                 <input type="text" id="name" name="name" th:field="*{name}"
                        th:errorclass="field-error" class="form-control" placeholder="이름을 입력하세요" />
                 <div class="field-error" th:errors="*{name}">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div>
-                <label for="loginId" class="form-label">아이디</label>
+                <label for="loginId" class="form-label" th:text="#{label.member.loginId}">아이디</label>
                 <input type="text" id="loginId" name="loginId" th:field="*{loginId}"
                        th:errorclass="field-error" class="form-control" placeholder="아이디를 입력하세요" />
                 <div class="field-error" th:errors="*{loginId}">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div>
-                <label for="password" class="form-label">암호</label>
+                <label for="password" class="form-label" th:text="#{label.member.password}">암호</label>
                 <input type="password" id="password" name="password" th:field="*{password}"
                        th:errorclass="field-error" class="form-control" placeholder="암호를 입력하세요" />
                 <div class="field-error" th:errors="*{password}">
@@ -48,24 +48,31 @@
                 </div>
             </div>
             <div>
-                <label for="email" class="form-label">이메일</label>
+                <label for="email" class="form-label" th:text="#{label.member.email}">이메일</label>
                 <input type="text" id="email" name="email" th:field="*{email}"
                        th:errorclass="field-error" class="form-control" placeholder="이메일을 입력하세요" />
                 <div class="field-error" th:errors="*{email}">
                     이메일 오류
                 </div>
             </div>
+            <div>
+                <label for="email" class="form-label" th:text="#{label.member.birth}">생년월일</label>
+                <input type="date" id="birth" name="email" th:field="*{birth}"
+                       th:errorclass="field-error" class="form-control" />
+                <div class="field-error" th:errors="*{birth}">
+                    생년월일 오류
+                </div>
+            </div>
             <hr class="my-4">
             <div class="row row-cols-2">
                 <div class="col">
-                    <button class="w-100 btn btn-primary" type="submit">가입</button>
+                    <button class="w-100 btn btn-primary" type="submit" th:text="#{button.member.join}">가입</button>
                 </div>
                 <div class="col">
-                    <button class="w-100 btn btn-primary" type="reset">초기화</button>
+                    <button class="w-100 btn btn-primary" type="reset" th:text="#{button.reset}">초기화</button>
                 </div>
             </div>
         </form>
     </div>
 </body>
-
 </html>
