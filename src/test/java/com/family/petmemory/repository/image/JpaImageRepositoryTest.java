@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,7 +32,7 @@ class JpaImageRepositoryTest {
     @Rollback(value = false)
     public void 이미지_등록() {
         //given
-        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDateTime.now());
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberA);
         Pet petA = new Pet("petA", memberA, LocalDateTime.now());
         petRepository.save(petA);
@@ -56,12 +57,12 @@ class JpaImageRepositoryTest {
     @Rollback(value = false)
     public void 이미지_검색() {
         //given
-        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDateTime.now());
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberA);
         Pet petA = new Pet("petA", memberA, LocalDateTime.now());
         petRepository.save(petA);
 
-        Member memberB = new Member("memberB", "주인2", "암호2", "jin@naver.com", LocalDateTime.now());
+        Member memberB = new Member("memberB", "주인2", "암호2", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberB);
         Pet petB = new Pet("petB", memberB, LocalDateTime.now());
         petRepository.save(petB);

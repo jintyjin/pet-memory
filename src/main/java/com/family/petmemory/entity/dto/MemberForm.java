@@ -1,9 +1,10 @@
 package com.family.petmemory.entity.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class MemberForm {
@@ -12,7 +13,7 @@ public class MemberForm {
     @Size(min = 8, max = 16)
     private String loginId;
 
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣]$")
+    @Pattern(regexp = "^[가-힣]{1,10}$")
     private String name;
 
     @NotEmpty
@@ -24,5 +25,6 @@ public class MemberForm {
     private String email;
 
     @NotNull
-    private LocalDateTime birth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 }

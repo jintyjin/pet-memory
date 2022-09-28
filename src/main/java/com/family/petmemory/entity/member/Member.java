@@ -4,6 +4,7 @@ import com.family.petmemory.entity.pet.Pet;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,12 @@ public class Member {
 
     private String email;
 
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     protected Member() {
     }
 
-    public Member(String loginId, String name, String password, String email, LocalDateTime birth) {
+    public Member(String loginId, String name, String password, String email, LocalDate birth) {
         this.loginId = loginId;
         this.name = name;
         this.password = password;

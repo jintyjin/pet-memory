@@ -56,8 +56,8 @@
                 </div>
             </div>
             <div>
-                <label for="email" class="form-label" th:text="#{label.member.birth}">생년월일</label>
-                <input type="date" id="birth" name="email" th:field="*{birth}"
+                <label for="birth" class="form-label" th:text="#{label.member.birth}">생년월일</label>
+                <input type="date" id="birth" name="birth" th:field="*{birth}"
                        th:errorclass="field-error" class="form-control" />
                 <div class="field-error" th:errors="*{birth}">
                     생년월일 오류
