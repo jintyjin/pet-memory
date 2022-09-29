@@ -3,8 +3,8 @@ package com.family.petmemory.controller;
 import com.family.petmemory.entity.dto.MemberForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.service.MemberService;
-import com.family.petmemory.validation.MemberLoginIdValidator;
-import com.family.petmemory.validation.MemberNameValidator;
+import com.family.petmemory.validation.memberForm.MemberFormLoginIdFormValidator;
+import com.family.petmemory.validation.memberForm.MemberFormNameFormValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberLoginIdValidator memberLoginIdValidator;
-    private final MemberNameValidator memberNameValidator;
+    private final MemberFormLoginIdFormValidator memberFormLoginIdValidator;
+    private final MemberFormNameFormValidator memberFormNameValidator;
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
-        dataBinder.addValidators(memberLoginIdValidator);
-        dataBinder.addValidators(memberNameValidator);
+        dataBinder.addValidators(memberFormLoginIdValidator);
+        dataBinder.addValidators(memberFormNameValidator);
     }
 
     @GetMapping("/new")
@@ -42,7 +42,6 @@ public class MemberController {
     @PostMapping("/new")
     public String create(@Validated MemberForm memberForm, BindingResult result) {
         if (result.hasErrors()) {
-            System.out.println("result = " + result);
             return "/members/createMemberForm";
         }
 

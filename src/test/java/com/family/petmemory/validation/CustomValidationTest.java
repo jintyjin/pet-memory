@@ -3,15 +3,15 @@ package com.family.petmemory.validation;
 import com.family.petmemory.entity.dto.MemberForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.repository.member.MemberRepository;
+import com.family.petmemory.validation.memberForm.MemberFormLoginIdFormValidator;
+import com.family.petmemory.validation.memberForm.MemberFormNameFormValidator;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 
 import java.time.LocalDate;
 
@@ -22,10 +22,10 @@ public class CustomValidationTest {
     MemberRepository memberRepository;
 
     @Autowired
-    MemberLoginIdValidator memberLoginIdValidator;
+    MemberFormLoginIdFormValidator memberFormLoginIdValidator;
 
     @Autowired
-    MemberNameValidator memberNameValidator;
+    MemberFormNameFormValidator memberFormNameValidator;
 
     @Test
     @Transactional
@@ -45,8 +45,8 @@ public class CustomValidationTest {
         //when
         BindingResult bindingResult = Mockito.mock(BindingResult.class);
 
-        memberLoginIdValidator.validate(memberForm, bindingResult);
-        memberNameValidator.validate(memberForm, bindingResult);
+        memberFormLoginIdValidator.validate(memberForm, bindingResult);
+        memberFormNameValidator.validate(memberForm, bindingResult);
 
         System.out.println(bindingResult);
 

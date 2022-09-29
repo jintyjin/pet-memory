@@ -1,10 +1,10 @@
-package com.family.petmemory.validation;
+package com.family.petmemory.validation.memberForm;
 
 import com.family.petmemory.entity.dto.MemberForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-public abstract class MemberValidator implements Validator {
+public abstract class MemberFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {

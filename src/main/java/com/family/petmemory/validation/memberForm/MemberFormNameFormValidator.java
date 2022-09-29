@@ -1,4 +1,4 @@
-package com.family.petmemory.validation;
+package com.family.petmemory.validation.memberForm;
 
 import com.family.petmemory.entity.dto.MemberForm;
 import com.family.petmemory.repository.member.MemberRepository;
@@ -8,21 +8,16 @@ import org.springframework.validation.Errors;
 
 @RequiredArgsConstructor
 @Component
-public class MemberLoginIdValidator extends MemberValidator {
+public class MemberFormNameFormValidator extends MemberFormValidator {
 
     private final MemberRepository memberRepository;
-
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return super.supports(clazz);
-    }
 
     @Override
     public void validate(Object target, Errors errors) {
         MemberForm memberForm = (MemberForm) target;
 
-        if (memberRepository.findByLoginId(memberForm.getLoginId()).isPresent()) {
-            errors.rejectValue("loginId", "existMember");
+        if (memberRepository.findByName(memberForm.getName()).stream().findAny().isPresent()) {
+            errors.rejectValue("name", "existMember");
         }
     }
 }
