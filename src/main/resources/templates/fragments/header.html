@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    a {
+        text-decoration : none;
+    }
+     .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+     }
+  </style>
+</head>
+<body>
+<div class="container-fluid" th:fragment="logo">
+    <div class="px-3 py-3 text-center">
+        <a href="#"><h3 th:utext="#{header.logo}"></h3></a>
+    </div>
+</div>
+</body>
+</html>
