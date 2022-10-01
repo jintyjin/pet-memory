@@ -8,16 +8,19 @@
     a {
         text-decoration : none;
     }
-     .field-error {
+    .nav {
+        --bs-nav-link-color: none;
+    }
+    .field-error {
         border-color: #dc3545;
         color: #dc3545;
-     }
+    }
   </style>
 </head>
 <body>
 <div class="container-fluid" th:fragment="logo">
     <div class="px-3 py-3 text-center">
-        <a href="#"><h3 th:utext="#{header.logo}"></h3></a>
+        <a class="navbar-brand" href="#"><h3 th:utext="#{header.logo}"></h3></a>
     </div>
 </div>
 </body>
