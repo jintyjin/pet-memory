@@ -34,7 +34,7 @@ class JpaImageRepositoryTest {
         //given
         Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberA);
-        Pet petA = new Pet("petA", memberA, LocalDateTime.now());
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
         petRepository.save(petA);
 
         //when
@@ -59,12 +59,12 @@ class JpaImageRepositoryTest {
         //given
         Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberA);
-        Pet petA = new Pet("petA", memberA, LocalDateTime.now());
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
         petRepository.save(petA);
 
         Member memberB = new Member("memberB", "주인2", "암호2", "jin@naver.com", LocalDate.now());
         memberRepository.save(memberB);
-        Pet petB = new Pet("petB", memberB, LocalDateTime.now());
+        Pet petB = new Pet("petB", memberB, LocalDate.now());
         petRepository.save(petB);
 
         //when

@@ -1,6 +1,9 @@
 package com.family.petmemory.controller;
 
 import com.family.petmemory.entity.dto.LoginForm;
+import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.session.SessionConst;
+import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.validation.loginForm.LoginFormLoginValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,11 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginFormLoginValidator loginFormLoginValidator;
+    private final MemberRepository memberRepository;
 
     @InitBinder
     public void init(WebDataBinder webDataBinder) {
@@ -29,11 +36,16 @@ public class LoginController {
         return "/login/loginForm";
     }
 
-    @PostMapping("login")
-    public String login(@Validated LoginForm loginForm, BindingResult bindingResult) {
+    @PostMapping("/login")
+    public String login(@Validated LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "/login/loginForm";
         }
+
+        Member member = memberRepository.findByLoginId(loginForm.getLoginId()).get();
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, member);
 
         return "redirect:/";
     }

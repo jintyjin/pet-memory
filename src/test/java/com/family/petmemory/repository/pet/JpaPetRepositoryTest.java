@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 class JpaPetRepositoryTest {
 
@@ -29,15 +31,15 @@ class JpaPetRepositoryTest {
         //given
         Member member = new Member("memberA", "주인1", "암호", "jin@naver.com", LocalDate.now());
         memberRepository.save(member);
-        Pet pet = new Pet("닥스훈트", member, LocalDateTime.now());
+        Pet pet = new Pet("닥스훈트", member, LocalDate.now());
 
         //when
         Long savedId = petRepository.save(pet);
         Pet findPet = petRepository.findById(savedId);
 
         //then
-        Assertions.assertThat(findPet.getId()).isEqualTo(pet.getId());
-        Assertions.assertThat(findPet.getName()).isEqualTo(pet.getName());
+        assertThat(findPet.getId()).isEqualTo(pet.getId());
+        assertThat(findPet.getName()).isEqualTo(pet.getName());
     }
 
     @Test
@@ -47,14 +49,14 @@ class JpaPetRepositoryTest {
         //given
         Member member1 = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(member1);
-        Pet pet1 = new Pet("닥스훈트1", member1, LocalDateTime.now());
-        Pet pet2 = new Pet("닥스훈트2", member1, LocalDateTime.now());
+        Pet pet1 = new Pet("닥스훈트1", member1, LocalDate.now());
+        Pet pet2 = new Pet("닥스훈트2", member1, LocalDate.now());
         petRepository.save(pet1);
         petRepository.save(pet2);
 
         Member member2 = new Member("memberB", "주인2", "암호2", "jin@naver.com", LocalDate.now());
         memberRepository.save(member2);
-        Pet pet3 = new Pet("닥스훈트3", member2, LocalDateTime.now());
+        Pet pet3 = new Pet("닥스훈트3", member2, LocalDate.now());
         petRepository.save(pet3);
 
         //when
@@ -63,10 +65,22 @@ class JpaPetRepositoryTest {
         List<Pet> pets = petRepository.findAll();
 
         //then
-        Assertions.assertThat(member1List.size()).isEqualTo(2);
-        Assertions.assertThat(member1.getPets().size()).isEqualTo(2);
-        Assertions.assertThat(member2List.size()).isEqualTo(1);
-        Assertions.assertThat(member2.getPets().size()).isEqualTo(1);
-        Assertions.assertThat(pets.size()).isEqualTo(3);
+        assertThat(member1List.size()).isEqualTo(2);
+        assertThat(member1.getPets().size()).isEqualTo(2);
+        assertThat(member2List.size()).isEqualTo(1);
+        assertThat(member2.getPets().size()).isEqualTo(1);
+        assertThat(pets.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    void check() {
+        petRepository.findAll()
+                .stream()
+                .filter(pet -> pet.getId() == 0)
+                .findAny()
+                .ifPresent(pet ->
+                        System.out.println(pet.getId())
+                );
     }
 }

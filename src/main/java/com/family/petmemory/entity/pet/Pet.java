@@ -5,6 +5,7 @@ import com.family.petmemory.entity.member.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Pet {
     protected Pet() {
     }
 
-    public Pet(String name, Member member, LocalDateTime bornTime) {
+    public Pet(String name, Member member, LocalDate bornTime) {
         this.name = name;
         this.member = member;
         this.member.addPet(this);
@@ -43,7 +44,7 @@ public class Pet {
         this.petStatus = PetStatus.NORMAL;
     }
 
-    public void leave(LocalDateTime leaveTime) {
+    public void leave(LocalDate leaveTime) {
         this.togetherTime.leave(leaveTime);
         this.petStatus = PetStatus.LEAVE;
     }

@@ -21,12 +21,12 @@ public class LoginFormLoginValidator extends LoginFormValidator {
 
         Optional<Member> byLoginId = memberRepository.findByLoginId(loginForm.getLoginId());
 
-        if (byLoginId.isEmpty()) {
-            errors.rejectValue("loginId", "notExistMember");
-        } else {
+        if (byLoginId.isPresent()) {
             if (!byLoginId.get().getPassword().equals(loginForm.getPassword())) {
                 errors.rejectValue("password", "wrongPassword");
             }
+        } else {
+            errors.rejectValue("loginId", "notExistMember");
         }
     }
 }
