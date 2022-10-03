@@ -3,6 +3,7 @@ package com.family.petmemory.controller;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.entity.session.SessionConst;
 import com.family.petmemory.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class PetController {
     private final PetService petService;
 
     @GetMapping("/new")
-    public String createForm(Model model, @SessionAttribute Member member) {
+    public String createForm(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
         model.addAttribute("petForm", new PetForm(member.getId()));
         return "/pets/createPetForm";
     }

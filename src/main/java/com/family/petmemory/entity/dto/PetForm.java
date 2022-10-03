@@ -20,6 +20,9 @@ public class PetForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bornTime;
 
+    protected PetForm() {
+    }
+
     public PetForm(Long memberId) {
         this.memberId = memberId;
     }
