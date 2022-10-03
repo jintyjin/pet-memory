@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container {
-            max-width: 560px;
-        }
-        .field-error {
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-    </style>
+<head th:replace="fragments/header :: header">
 </head>
-
 <body>
-<div class="container">
+<div th:replace="fragments/header :: logo"></div>
+<div th:replace="fragments/bodyHeader :: bodyHeader" />
+<div class="container" style="max-width:560px;">
     <div class="py-5 text-center">
         <h2 th:text="#{page.createPetForm}">펫 등록</h2>
     </div>
@@ -51,5 +39,6 @@
         </div>
     </form>
 </div>
+<div th:replace="fragments/footer :: footer" />
 </body>
 </html>
