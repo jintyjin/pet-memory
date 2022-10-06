@@ -1,8 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div class="container-fluid" th:fragment="logo">
-    <div class="px-3 py-3 text-center">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="container-fluid row px-3 py-3" th:fragment="logo">
+    <div class="col-md-2 text-center">
         <a class="navbar-brand" href="/"><h3 th:utext="#{header.logo}"></h3></a>
+    </div>
+    <div class="col-md-10">
+        <ul class="nav justify-content-end text-dark">
+            <li th:if="${session.loginMember == null}" class="nav-item">
+                <a class="nav-link" href="/login">로그인</a>
+            </li>
+            <li th:if="${session.loginMember != null}" class="nav-item">
+                <form action th:action="@{/logout}" id="logout" method="post">
+                    <a class="nav-link" onclick="document.getElementById('logout').submit();" href="#">로그아웃</a>
+                </form>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="container-fluid px-0 bg-info bg-gradient text-white" th:fragment="bodyHeader">
