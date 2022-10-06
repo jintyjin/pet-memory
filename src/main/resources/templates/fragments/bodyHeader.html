@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<div class="container-fluid" th:fragment="logo">
+    <div class="px-3 py-3 text-center">
+        <a class="navbar-brand" href="/"><h3 th:utext="#{header.logo}"></h3></a>
+    </div>
+</div>
 <div class="container-fluid px-0 bg-info bg-gradient text-white" th:fragment="bodyHeader">
     <div class="px-0 py-3">
         <div class="container-fluid">
