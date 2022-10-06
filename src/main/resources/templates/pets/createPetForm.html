@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header">
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
 <body>
-<div th:replace="fragments/bodyHeader :: logo"></div>
-<div th:replace="fragments/bodyHeader :: bodyHeader" />
-<div class="container" style="max-width:560px;">
+<div layout:fragment="content" class="container col-md-3"> <!--style="max-width:560px;"-->
     <div class="py-5 text-center">
         <h2 th:text="#{page.createPetForm}">펫 등록</h2>
     </div>
@@ -39,6 +35,5 @@
         </div>
     </form>
 </div>
-<div th:replace="fragments/footer :: footer" />
 </body>
 </html>
