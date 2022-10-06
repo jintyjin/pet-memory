@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<body>
+<div layout:fragment="content" class="container-fluid">
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.memory}">메모리</h2>
+    </div>
+    <img src="/images/pet_thumbnail.png"
+         th:src="@{/images/KakaoTalk_20200629_004002411.jpg}" class="img-fluid rounded float-start" alt="...">
+    <img src="/images/pet_thumbnail.png"
+         th:src="@{/images/KakaoTalk_20200629_004005067.jpg}" class="img-fluid rounded float-start" alt="...">
+    <img src="/images/pet_thumbnail.png"
+         th:src="@{/images/pet_thumbnail.png}" class="img-fluid rounded float-start" alt="...">
+    <img src="/images/pet_thumbnail.png"
+         th:src="@{/images/pet_thumbnail.png}" class="img-fluid rounded float-start" alt="...">
+    <img src="/images/pet_thumbnail.png"
+         th:src="@{/images/pet_thumbnail.png}" class="img-fluid rounded float-start" alt="...">
+</div>
+</body>
+</html>

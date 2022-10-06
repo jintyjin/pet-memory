@@ -33,6 +33,8 @@ public class Pet {
     @Enumerated(EnumType.STRING)
     private PetStatus petStatus;
 
+    private String thumbnail;
+
     protected Pet() {
     }
 
@@ -51,5 +53,9 @@ public class Pet {
 
     public void addImage(Image image) {
         this.images.add(image);
+    }
+
+    public void changeThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

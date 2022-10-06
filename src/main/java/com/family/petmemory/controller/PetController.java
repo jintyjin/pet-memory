@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/pets")
@@ -37,5 +39,12 @@ public class PetController {
         petService.join(petForm);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/memory")
+    public String memory(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
+        List<Pet> myPets = petService.findMyPets(member);
+        model.addAttribute("myPets", myPets);
+        return "/pets/memory";
     }
 }
