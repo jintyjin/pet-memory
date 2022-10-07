@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <body>
-<div layout:fragment="content" class="container col-md-3"> <!--style="max-width:560px;"-->
-    <div class="py-5 text-center">
+<div layout:fragment="content" class="container col-md-3 py-5"> <!--style="max-width:560px;"-->
+    <!--<div class="py-5 text-center">
         <h2>로그인</h2>
-    </div>
+    </div>-->
     <form action="loginForm.html" th:action th:object="${loginForm}" method="post">
         <div>
             <label for="loginId" th:text="#{label.member.loginId}">로그인 ID</label>

@@ -14,7 +14,8 @@ public class Image {
     @Column(name = "image_id")
     private Long id;
 
-    private String path;
+    @Embedded
+    private UploadFile uploadFile;
 
     @Embedded
     private ManageTime manageTime;
@@ -29,8 +30,8 @@ public class Image {
     protected Image() {
     }
 
-    public Image(String path, Pet pet) {
-        this.path = path;
+    public Image(UploadFile uploadFile, Pet pet) {
+        this.uploadFile = uploadFile;
         this.pet = pet;
         this.pet.addImage(this);
         this.manageTime = new ManageTime(LocalDateTime.now());

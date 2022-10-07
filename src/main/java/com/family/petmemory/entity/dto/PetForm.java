@@ -2,6 +2,7 @@ package com.family.petmemory.entity.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -20,6 +21,8 @@ public class PetForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bornTime;
 
+    private MultipartFile multipartFile;
+
     protected PetForm() {
     }
 
@@ -27,9 +30,10 @@ public class PetForm {
         this.memberId = memberId;
     }
 
-    public PetForm(Long memberId, String name, LocalDate bornTime) {
+    public PetForm(Long memberId, String name, LocalDate bornTime, MultipartFile multipartFile) {
         this.memberId = memberId;
         this.name = name;
         this.bornTime = bornTime;
+        this.multipartFile = multipartFile;
     }
 }

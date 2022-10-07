@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <body>
-    <div layout:fragment="content" class="container col-md-3"> <!--style="max-width:560px;"-->
-        <div class="py-5 text-center">
+    <div layout:fragment="content" class="container col-md-3 py-5"> <!--style="max-width:560px;"-->
+        <!--<div class="py-5 text-center">
             <h2 th:text="#{page.createMemberForm}">회원 가입</h2>
-        </div>
+        </div>-->
         <form action="" th:action th:object="${memberForm}" method="post">
             <div>
                 <label for="name" class="form-label" th:text="#{label.member.name}">이름</label>

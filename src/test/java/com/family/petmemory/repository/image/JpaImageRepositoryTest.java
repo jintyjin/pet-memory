@@ -1,6 +1,7 @@
 package com.family.petmemory.repository.image;
 
 import com.family.petmemory.entity.image.Image;
+import com.family.petmemory.entity.image.UploadFile;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
@@ -38,10 +39,10 @@ class JpaImageRepositoryTest {
         petRepository.save(petA);
 
         //when
-        Image imageA = new Image("/home/folder/imageA.jpg", petA);
-        Image imageB = new Image("/home/folder/imageB.jpg", petA);
-        Image imageC = new Image("/home/folder/imageC.jpg", petA);
-        Image imageD = new Image("/home/folder/imageD.jpg", petA);
+        Image imageA = new Image(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA);
+        Image imageB = new Image(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA);
+        Image imageC = new Image(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petA);
+        Image imageD = new Image(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petA);
         Long savedId = imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);
@@ -68,10 +69,10 @@ class JpaImageRepositoryTest {
         petRepository.save(petB);
 
         //when
-        Image imageA = new Image("/home/folder/imageA.jpg", petA);
-        Image imageB = new Image("/home/folder/imageB.jpg", petA);
-        Image imageC = new Image("/home/folder/imageC.jpg", petB);
-        Image imageD = new Image("/home/folder/imageD.jpg", petB);
+        Image imageA = new Image(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA);
+        Image imageB = new Image(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA);
+        Image imageC = new Image(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petB);
+        Image imageD = new Image(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petB);
         imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);

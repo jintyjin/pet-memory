@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <body>
-<div layout:fragment="content" class="container col-md-3"> <!--style="max-width:560px;"-->
-    <div class="py-5 text-center">
+<div layout:fragment="content" class="container col-md-3 py-5"> <!--style="max-width:560px;"-->
+    <!--<div class="py-5 text-center">
         <h2 th:text="#{page.createPetForm}">펫 등록</h2>
-    </div>
+    </div>-->
     <form action="" th:action th:object="${petForm}" method="post">
         <input type="hidden" id="memberId" name="memberId" th:field="*{memberId}" />
         <div>
@@ -23,6 +23,12 @@
             <div class="field-error" th:errors="*{bornTime}">
                 생년월일 오류
             </div>
+        </div>
+        <div>
+            <label for="multipartFile" class="form-label" th:text="#{label.pet.thumbnail}">생년월일</label>
+            <input type="file" accept="image/jpg, image/jpeg, image/png"
+                   id="multipartFile" name="multipartFile" th:field="*{multipartFile}"
+                   class="form-control" />
         </div>
         <hr class="my-4">
         <div class="row row-cols-2">
