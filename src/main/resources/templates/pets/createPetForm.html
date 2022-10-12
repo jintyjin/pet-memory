@@ -6,7 +6,7 @@
     <!--<div class="py-5 text-center">
         <h2 th:text="#{page.createPetForm}">펫 등록</h2>
     </div>-->
-    <form action="" th:action th:object="${petForm}" method="post">
+    <form action="" th:action th:object="${petForm}" method="post" enctype="multipart/form-data">
         <input type="hidden" id="memberId" name="memberId" th:field="*{memberId}" />
         <div>
             <label for="name" class="form-label" th:text="#{label.pet.name}">이름</label>
@@ -25,10 +25,13 @@
             </div>
         </div>
         <div>
-            <label for="multipartFile" class="form-label" th:text="#{label.pet.thumbnail}">생년월일</label>
-            <input type="file" accept="image/jpg, image/jpeg, image/png video/mp4"
-                   id="multipartFile" name="multipartFile" th:field="*{multipartFile}"
+            <label for="profile" class="form-label" th:text="#{label.pet.profile}">프로필</label>
+            <input type="file" accept="image/jpg, image/jpeg, image/png, video/mp4"
+                   id="profile" name="profile" th:field="*{profile}"
                    class="form-control" />
+            <div class="field-error" th:errors="*{profile}">
+                파일 오류
+            </div>
         </div>
         <hr class="my-4">
         <div class="row row-cols-2">

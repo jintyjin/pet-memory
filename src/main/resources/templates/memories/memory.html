@@ -3,14 +3,14 @@
       layout:decorate="~{fragments/layout}">
 <body>
 <div layout:fragment="content" class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
-    <div th:each="memoryForm : ${memoryForms}">
+    <div th:each="petProfileForm : ${petProfileForms}">
         <div>
             <a href="">
-                <img src th:src="@{|/images${memoryForm.thumbnail}|}" class="img-thumbnail" th:alt="${memoryForm.name}" />
+                <img src th:src="${petProfileForm.path} ? @{|/images/${petProfileForm.path}|} : @{/images/pet_thumbnail.png}" class="img-thumbnail" th:alt="${petProfileForm.name}" />
             </a>
         </div>
         <div class="text-center">
-            <a href="#" th:text="${memoryForm.name}">
+            <a href="#" th:text="${petProfileForm.name}">
                 이복댕
             </a>
         </div>

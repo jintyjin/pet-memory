@@ -1,12 +1,11 @@
 package com.family.petmemory.service;
 
-import com.family.petmemory.entity.dto.MemoryForm;
+import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.PetRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,15 +15,13 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PetServiceTest {
@@ -75,20 +72,38 @@ class PetServiceTest {
         Long savedPetId2 = petService.join(new PetForm(savedId, "이북댕", LocalDate.now(), file));
         Pet findPet1 = petRepository.findById(savedPetId1);
         Pet findPet2 = petRepository.findById(savedPetId2);
-        findPet1.changeThumbnail("/KakaoTalk_20200629_004002411.jpg");
-        findPet2.changeThumbnail("/KakaoTalk_20200629_004005067.jpg");
+        findPet1.changeProfile(UUID.randomUUID().toString());
+        findPet2.changeProfile(UUID.randomUUID().toString());
 
         //when
-        List<MemoryForm> pets = petService.findMyPets(member)
+        List<PetProfileForm> pets = petService.findMyPets(member)
                 .stream()
-                .map(pet -> new MemoryForm(pet.getName(), pet.getThumbnail()))
+                .map(pet -> new PetProfileForm(pet.getName(), pet.getProfile()))
                 .collect(Collectors.toList());
 
-        for (MemoryForm pet : pets) {
-            System.out.println(pet.getName() + " = " + pet.getThumbnail());
+        for (PetProfileForm pet : pets) {
+            System.out.println(pet.getName() + " = " + pet.getPath());
         }
 
         //then
         assertThat(pets.size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void 펫목록() {
+        //given
+        Member member = new Member("testMember123", "홍길동", "testMember!23", "jin@naver.com", LocalDate.now());
+        memberRepository.save(member);
+
+        //when
+        List<PetProfileForm> petProfileForms = petService.findMyPets(member)
+                .stream()
+                .map(pet -> new PetProfileForm(pet.getName(), pet.getProfile()))
+                .collect(Collectors.toList());
+
+        //then
+        assertThat(petProfileForms.size()).isEqualTo(0);
     }
 }

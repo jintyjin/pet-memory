@@ -1,12 +1,11 @@
 package com.family.petmemory.entity.pet;
 
-import com.family.petmemory.entity.image.Image;
+import com.family.petmemory.entity.memory.Memory;
 import com.family.petmemory.entity.member.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class Pet {
     private Member member;
 
     @OneToMany(mappedBy = "pet")
-    private List<Image> images = new ArrayList<>();
+    private List<Memory> memories = new ArrayList<>();
 
     @Embedded
     private TogetherTime togetherTime;
@@ -33,7 +32,7 @@ public class Pet {
     @Enumerated(EnumType.STRING)
     private PetStatus petStatus;
 
-    private String thumbnail;
+    private String profile;
 
     protected Pet() {
     }
@@ -51,11 +50,11 @@ public class Pet {
         this.petStatus = PetStatus.LEAVE;
     }
 
-    public void addImage(Image image) {
-        this.images.add(image);
+    public void addImage(Memory image) {
+        this.memories.add(image);
     }
 
-    public void changeThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void changeProfile(String profile) {
+        this.profile = profile;
     }
 }

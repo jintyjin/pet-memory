@@ -1,4 +1,4 @@
-package com.family.petmemory.entity.image;
+package com.family.petmemory.entity.memory;
 
 import com.family.petmemory.entity.pet.Pet;
 import lombok.Getter;
@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class Image {
+public class Memory {
 
     @Id @GeneratedValue
-    @Column(name = "image_id")
+    @Column(name = "memory_id")
     private Long id;
 
     @Embedded
@@ -25,21 +25,28 @@ public class Image {
     private Pet pet;
 
     @Enumerated(EnumType.STRING)
-    private ImageStatus imageStatus;
+    private memoryStatus memoryStatus;
 
-    protected Image() {
+    protected Memory() {
     }
 
-    public Image(UploadFile uploadFile, Pet pet) {
+    public Memory(UploadFile uploadFile, Pet pet) {
         this.uploadFile = uploadFile;
         this.pet = pet;
         this.pet.addImage(this);
         this.manageTime = new ManageTime(LocalDateTime.now());
-        this.imageStatus = ImageStatus.NORMAL;
+        this.memoryStatus = memoryStatus.NORMAL;
     }
 
     public void delete() {
         this.manageTime.delete(LocalDateTime.now());
-        this.imageStatus = ImageStatus.DELETE;
+        this.memoryStatus = memoryStatus.DELETE;
+        if (isProfile()) {
+            this.pet.changeProfile(null);
+        }
+    }
+
+    private boolean isProfile() {
+        return this.pet.getProfile() != null && this.pet.getProfile().equals(this.getUploadFile().getSaveFileName());
     }
 }

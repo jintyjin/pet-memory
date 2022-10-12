@@ -1,4 +1,4 @@
-package com.family.petmemory.entity.image;
+package com.family.petmemory.entity.memory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 public class UploadFile {
 
     private String uploadFileName;
-    private String storeFileName;
+    private String saveFileName;
 
     protected UploadFile() {
     }

@@ -1,4 +1,4 @@
-package com.family.petmemory.entity.image;
+package com.family.petmemory.entity.memory;
 
 import lombok.Getter;
 

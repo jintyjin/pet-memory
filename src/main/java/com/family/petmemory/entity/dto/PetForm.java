@@ -21,7 +21,7 @@ public class PetForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bornTime;
 
-    private MultipartFile multipartFile;
+    private MultipartFile profile;
 
     protected PetForm() {
     }
@@ -30,10 +30,10 @@ public class PetForm {
         this.memberId = memberId;
     }
 
-    public PetForm(Long memberId, String name, LocalDate bornTime, MultipartFile multipartFile) {
+    public PetForm(Long memberId, String name, LocalDate bornTime, MultipartFile profile) {
         this.memberId = memberId;
         this.name = name;
         this.bornTime = bornTime;
-        this.multipartFile = multipartFile;
+        this.profile = profile;
     }
 }
