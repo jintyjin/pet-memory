@@ -44,18 +44,22 @@ public class MemoryService {
                 profile = saveFiles(files, profile, i);
             }
         } catch (IOException e) {
-            for (int i = 0; i < files.size(); i++) {
-                MemoryDto memoryDto = files.get(i);
-                File file = new File(fileDir + memoryDto.getUploadFile().getSaveFileName());
-                if (file.exists()) {
-                    file.delete();
-                }
-            }
+            deleteFiles(files);
 
             return null;
         }
 
         return profile;
+    }
+
+    private void deleteFiles(List<MemoryDto> files) {
+        for (int i = 0; i < files.size(); i++) {
+            MemoryDto memoryDto = files.get(i);
+            File file = new File(fileDir + memoryDto.getUploadFile().getSaveFileName());
+            if (file.exists()) {
+                file.delete();
+            }
+        }
     }
 
     private String saveFiles(List<MemoryDto> files, String profile, int i) throws IOException {
@@ -67,11 +71,5 @@ public class MemoryService {
             profile = memoryDto.getUploadFile().getSaveFileName();
         }
         return profile;
-    }
-
-    private void deleteFiles(List<MultipartFile> files) {
-        for (MultipartFile file : files) {
-
-        }
     }
 }

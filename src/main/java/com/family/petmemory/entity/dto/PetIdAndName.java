@@ -5,11 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PetProfileForm {
+public class PetIdAndName {
 
     private Long id;
 
     private String name;
-
-    private String path;
 }

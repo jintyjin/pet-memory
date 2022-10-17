@@ -4,6 +4,7 @@ import com.family.petmemory.entity.dto.MemoryForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.entity.pet.PetStatus;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,10 @@ public class PetService {
         }
 
         return pet.getId();
+    }
+
+    public List<Pet> findMyPets(Member member, PetStatus petStatus) {
+        return petRepository.findByMemberAndPetStatus(member, petStatus);
     }
 
     public List<Pet> findMyPets(Member member) {

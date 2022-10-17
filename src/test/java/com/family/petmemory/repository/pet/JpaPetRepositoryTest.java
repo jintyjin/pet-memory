@@ -2,6 +2,7 @@ package com.family.petmemory.repository.pet;
 
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.entity.pet.PetStatus;
 import com.family.petmemory.repository.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class JpaPetRepositoryTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    public void 펫모아보기() {
+    void 펫모아보기() {
         //given
         Member member1 = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
         memberRepository.save(member1);
@@ -82,5 +83,24 @@ class JpaPetRepositoryTest {
                 .ifPresent(pet ->
                         System.out.println(pet.getId())
                 );
+    }
+
+    @Test
+    @Transactional
+    void 존재하는모든펫() {
+        //given
+        Member member1 = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
+        memberRepository.save(member1);
+        Pet pet1 = new Pet("닥스훈트1", member1, LocalDate.now());
+        Pet pet2 = new Pet("닥스훈트2", member1, LocalDate.now());
+        petRepository.save(pet1);
+        petRepository.save(pet2);
+        pet1.leave(LocalDate.now());
+
+        //when
+        List<Pet> pets = petRepository.findByMemberAndPetStatus(member1, PetStatus.NORMAL);
+
+        //then
+        assertThat(pets.size()).isEqualTo(1);
     }
 }

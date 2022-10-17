@@ -2,6 +2,7 @@ package com.family.petmemory.repository.pet;
 
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.entity.pet.PetStatus;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -27,6 +28,14 @@ public class JpaPetRepository implements PetRepository {
     public List<Pet> findByMember(Member member) {
         return em.createQuery("select p from Pet p where p.member = :member")
                 .setParameter("member", member)
+                .getResultList();
+    }
+
+    @Override
+    public List<Pet> findByMemberAndPetStatus(Member member, PetStatus petStatus) {
+        return em.createQuery("select p from Pet p where p.member = :member and p.petStatus = :petStatus")
+                .setParameter("member", member)
+                .setParameter("petStatus", petStatus)
                 .getResultList();
     }
 
