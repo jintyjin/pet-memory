@@ -1,6 +1,7 @@
 package com.family.petmemory.controller;
 
 import com.family.petmemory.entity.dto.MemoryForm;
+import com.family.petmemory.entity.dto.MemoryShowForm;
 import com.family.petmemory.entity.dto.PetIdAndName;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
@@ -70,5 +71,14 @@ public class MemoryController {
         memoryService.join(memoryForm);
 
         return "/memories/memory";
+    }
+
+    @GetMapping("/memory/{petId}")
+    public String memories(Model model, @PathVariable Long petId) {
+        List<MemoryShowForm> memories = memoryService.showPetMemories(petId);
+
+        model.addAttribute("memories", memories);
+
+        return "/memories/memories";
     }
 }

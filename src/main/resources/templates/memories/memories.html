@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<body>
+<div layout:fragment="content" class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
+    <div th:each="memory : ${memories}">
+        <div>
+            <a href="#">
+                <img src th:src="@{|/images/${memory.path}|}" class="img-thumbnail" th:alt="${memory.petName}" />
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

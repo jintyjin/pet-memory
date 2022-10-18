@@ -2,11 +2,12 @@ package com.family.petmemory.service;
 
 import com.family.petmemory.entity.dto.MemoryDto;
 import com.family.petmemory.entity.dto.MemoryForm;
+import com.family.petmemory.entity.dto.MemorySearchCondition;
+import com.family.petmemory.entity.dto.MemoryShowForm;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.entity.memory.Memory;
-import com.family.petmemory.entity.memory.UploadFile;
+import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
 import com.family.petmemory.repository.pet.PetRepository;
-import com.family.petmemory.repository.memory.MemoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class MemoryService {
 
     private final PetRepository petRepository;
-    private final MemoryRepository memoryRepository;
+    private final DataJpaMemoryRepository memoryRepository;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -50,6 +50,13 @@ public class MemoryService {
         }
 
         return profile;
+    }
+
+    public List<MemoryShowForm> showPetMemories(Long petId) {
+        return memoryRepository.search(new MemorySearchCondition(petId, null))
+                .stream()
+                .map(memory -> new MemoryShowForm(memory.getPet().getId(), memory.getPet().getName(), memory.getId(), memory.getUploadFile().getSaveFileName()))
+                .collect(Collectors.toList());
     }
 
     private void deleteFiles(List<MemoryDto> files) {
