@@ -78,7 +78,7 @@ class PetServiceTest {
         //when
         List<PetProfileForm> pets = petService.findMyPets(member)
                 .stream()
-                .map(pet -> new PetProfileForm(pet.getName(), pet.getProfile()))
+                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
                 .collect(Collectors.toList());
 
         for (PetProfileForm pet : pets) {
@@ -100,7 +100,7 @@ class PetServiceTest {
         //when
         List<PetProfileForm> petProfileForms = petService.findMyPets(member)
                 .stream()
-                .map(pet -> new PetProfileForm(pet.getName(), pet.getProfile()))
+                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
                 .collect(Collectors.toList());
 
         //then
