@@ -47,10 +47,7 @@ public class PetController {
 
     @GetMapping
     public String pets(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
-        List<PetProfileForm> petProfileFormList = petService.findMyPets(member)
-                .stream()
-                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
-                .collect(Collectors.toList());
+        List<PetProfileForm> petProfileFormList = petService.findMyPets(member);
         model.addAttribute("petProfileFormList", petProfileFormList);
 
         return "/pets/pets";

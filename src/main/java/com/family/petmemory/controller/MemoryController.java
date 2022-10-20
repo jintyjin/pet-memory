@@ -5,6 +5,7 @@ import com.family.petmemory.entity.dto.MemoryShowForm;
 import com.family.petmemory.entity.dto.PetIdAndName;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.session.SessionConst;
 import com.family.petmemory.service.MemoryService;
 import com.family.petmemory.service.PetService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +40,7 @@ public class MemoryController {
 
     @GetMapping("/memory")
     public String memory(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
-        List<PetProfileForm> petProfileForms = petService.findMyPets(member)
-                .stream()
-                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
-                .collect(Collectors.toList());
+        List<PetProfileForm> petProfileForms = petService.findMyPets(member);
         model.addAttribute("petProfileForms", petProfileForms);
         return "/memories/memory";
     }
@@ -50,7 +49,7 @@ public class MemoryController {
     public String createForm(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
         List<PetIdAndName> petIdAndNameList = petService.findMyPets(member)
                 .stream()
-                .map(pet -> new PetIdAndName(pet.getId(), pet.getName()))
+                .map(petProfileForm -> new PetIdAndName(petProfileForm.getId(), petProfileForm.getName()))
                 .collect(Collectors.toList());
         model.addAttribute("petIdAndNameList", petIdAndNameList);
         model.addAttribute("memoryForm", new MemoryForm());
@@ -75,7 +74,7 @@ public class MemoryController {
 
     @GetMapping("/memory/{petId}")
     public String memories(Model model, @PathVariable Long petId) {
-        List<MemoryShowForm> memories = memoryService.showPetMemories(petId);
+        List<MemoryShowForm> memories = memoryService.showPetMemories(petId, MemoryStatus.NORMAL);
 
         model.addAttribute("memories", memories);
 

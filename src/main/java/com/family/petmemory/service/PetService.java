@@ -2,11 +2,12 @@ package com.family.petmemory.service;
 
 import com.family.petmemory.entity.dto.MemoryForm;
 import com.family.petmemory.entity.dto.PetForm;
+import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.entity.pet.PetStatus;
 import com.family.petmemory.repository.member.MemberRepository;
-import com.family.petmemory.repository.pet.PetRepository;
+import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class PetService {
 
     private final MemoryService memoryService;
     private final MemberRepository memberRepository;
-    private final PetRepository petRepository;
+    private final DataJpaPetRepository petRepository;
 
     @Transactional
     public Long join(PetForm petForm) throws IOException {
@@ -38,12 +39,8 @@ public class PetService {
         return pet.getId();
     }
 
-    public List<Pet> findMyPets(Member member, PetStatus petStatus) {
-        return petRepository.findByMemberAndPetStatus(member, petStatus);
-    }
-
-    public List<Pet> findMyPets(Member member) {
-        return petRepository.findByMember(member);
+    public List<PetProfileForm> findMyPets(Member member) {
+        return petRepository.findPetProfile(member);
     }
 
     public List<Pet> findPets() {

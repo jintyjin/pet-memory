@@ -1,5 +1,5 @@
 package com.family.petmemory.entity.memory;
 
-public enum memoryStatus {
+public enum MemoryStatus {
     NORMAL, DELETE
 }

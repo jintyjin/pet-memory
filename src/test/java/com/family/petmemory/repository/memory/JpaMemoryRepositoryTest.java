@@ -1,6 +1,7 @@
 package com.family.petmemory.repository.memory;
 
 import com.family.petmemory.entity.memory.Memory;
+import com.family.petmemory.entity.memory.MemoryType;
 import com.family.petmemory.entity.memory.UploadFile;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
@@ -43,10 +44,10 @@ class JpaMemoryRepositoryTest {
         petRepository.save(petA);
 
         //when
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petA);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petA);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petA, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petA, MemoryType.IMAGE);
         Long savedId = imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);
@@ -73,10 +74,10 @@ class JpaMemoryRepositoryTest {
         petRepository.save(petB);
 
         //when
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petB);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petB);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petB, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petB, MemoryType.IMAGE);
         imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);

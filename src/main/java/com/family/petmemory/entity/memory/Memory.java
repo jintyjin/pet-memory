@@ -25,17 +25,21 @@ public class Memory {
     private Pet pet;
 
     @Enumerated(EnumType.STRING)
-    private memoryStatus memoryStatus;
+    private MemoryStatus memoryStatus;
+
+    @Enumerated(EnumType.STRING)
+    private MemoryType memoryType;
 
     protected Memory() {
     }
 
-    public Memory(UploadFile uploadFile, Pet pet) {
+    public Memory(UploadFile uploadFile, Pet pet, MemoryType memoryType) {
         this.uploadFile = uploadFile;
         this.pet = pet;
         this.pet.addImage(this);
         this.manageTime = new ManageTime(LocalDateTime.now());
         this.memoryStatus = memoryStatus.NORMAL;
+        this.memoryType = memoryType;
     }
 
     public void delete() {

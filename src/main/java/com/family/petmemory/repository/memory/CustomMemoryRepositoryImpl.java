@@ -2,7 +2,7 @@ package com.family.petmemory.repository.memory;
 
 import com.family.petmemory.entity.dto.MemorySearchCondition;
 import com.family.petmemory.entity.memory.Memory;
-import com.querydsl.core.types.Predicate;
+import com.family.petmemory.entity.memory.MemoryStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -27,7 +27,8 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                 .selectFrom(memory)
                 .where(
                         petIdEq(condition.getPetId()),
-                        memoryIdEq(condition.getMemoryId())
+                        memoryIdEq(condition.getMemoryId()),
+                        memoryStatusEq(condition.getMemoryStatus())
                 )
                 .limit(MAX_COUNT)
                 .orderBy(memory.manageTime.uploadTime.desc(), memory.id.asc())
@@ -41,4 +42,10 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
     private BooleanExpression petIdEq(Long petId) {
         return petId == null ? null : memory.pet.id.eq(petId);
     }
+
+    private BooleanExpression memoryStatusEq(MemoryStatus memoryStatus) {
+        return memoryStatus == null ? null : memory.memoryStatus.eq(memoryStatus);
+    }
+
+
 }

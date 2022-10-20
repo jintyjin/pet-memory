@@ -2,6 +2,7 @@ package com.family.petmemory.service;
 
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.Memory;
+import com.family.petmemory.entity.memory.MemoryType;
 import com.family.petmemory.entity.memory.UploadFile;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
@@ -41,6 +42,7 @@ class MemoryServiceTest {
 
     @Test
     @Transactional()
+    @Rollback(value = false)
     void 업로드_가능_여부() throws IOException {
         //given
         Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
@@ -59,10 +61,36 @@ class MemoryServiceTest {
         for (MultipartFile file : list) {
             String saveFileName = file.getName() + "." + file.getContentType().split("/")[1];
             String uploadFileName = file.getOriginalFilename();
-            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), petA));
+            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), petA, MemoryType.valueOf(file.getContentType().split("/")[0].toUpperCase())));
             File saveFile = new File(fileDir + saveFileName);
             file.transferTo(saveFile);
-            saveFile.delete();
+//            saveFile.delete();
+        }
+    }
+
+    @Test
+    @Transactional
+    void 업로드_파일_타입_확인() throws IOException {
+        //given
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
+        memberRepository.save(memberA);
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
+        petRepository.save(petA);
+
+        //when
+        List<MultipartFile> list = new ArrayList<>();
+        MultipartFile file1 = new MockMultipartFile(UUID.randomUUID().toString(), "1234.jpg", "image/jpg", new FileInputStream(fileDir + "/KakaoTalk_20200629_004002411.jpg"));
+        MultipartFile file2 = new MockMultipartFile(UUID.randomUUID().toString(), "1234.jpg", "image/jpg", new FileInputStream(fileDir + "/KakaoTalk_20200629_004005067.jpg"));
+        MultipartFile file3 = new MockMultipartFile(UUID.randomUUID().toString(), "1234.mp4", "video/mp4", new FileInputStream(fileDir + "/kakaotalk_1544571817654.mp4"));
+        MultipartFile file4 = new MockMultipartFile(UUID.randomUUID().toString(), "1234.mp4", "video/mp4", new FileInputStream(fileDir + "/kakaotalk_1544571819513.mp4"));
+        list.add(file1);
+        list.add(file2);
+        list.add(file3);
+        list.add(file4);
+
+        //then
+        for (MultipartFile file : list) {
+            System.out.println("file.getContentType() = " + file.getContentType().split("/")[0].toUpperCase());
         }
     }
 }

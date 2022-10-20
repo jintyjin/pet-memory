@@ -76,10 +76,7 @@ class PetServiceTest {
         findPet2.changeProfile(UUID.randomUUID().toString());
 
         //when
-        List<PetProfileForm> pets = petService.findMyPets(member)
-                .stream()
-                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
-                .collect(Collectors.toList());
+        List<PetProfileForm> pets = petService.findMyPets(member);
 
         for (PetProfileForm pet : pets) {
             System.out.println(pet.getName() + " = " + pet.getPath());
@@ -98,10 +95,7 @@ class PetServiceTest {
         memberRepository.save(member);
 
         //when
-        List<PetProfileForm> petProfileForms = petService.findMyPets(member)
-                .stream()
-                .map(pet -> new PetProfileForm(pet.getId(), pet.getName(), pet.getProfile()))
-                .collect(Collectors.toList());
+        List<PetProfileForm> petProfileForms = petService.findMyPets(member);
 
         //then
         assertThat(petProfileForms.size()).isEqualTo(0);
