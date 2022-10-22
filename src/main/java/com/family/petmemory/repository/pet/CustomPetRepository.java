@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CustomPetRepository {
 
-    List<PetProfileForm> findPetProfile(Member member);
+    PetProfileForm findPetProfile(Long petId);
+    List<PetProfileForm> findPetProfiles(Member member);
 }

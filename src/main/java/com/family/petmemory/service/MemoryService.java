@@ -59,9 +59,9 @@ public class MemoryService {
     }
 
     public List<MemoryShowForm> showPetMemories(Long petId, MemoryStatus memoryStatus) {
-        return memoryRepository.search(new MemorySearchCondition(petId, null, memoryStatus))
+        return memoryRepository.search(new MemorySearchCondition(petId, null, memoryStatus, null))
                 .stream()
-                .map(memory -> new MemoryShowForm(memory.getPet().getId(), memory.getPet().getName(), memory.getId(), memory.getUploadFile().getSaveFileName()))
+                .map(memory -> new MemoryShowForm(memory.getPet().getId(), memory.getPet().getName(), memory.getId(), memory.getUploadFile().getSaveFileName(), memory.getMemoryType()))
                 .collect(Collectors.toList());
     }
 

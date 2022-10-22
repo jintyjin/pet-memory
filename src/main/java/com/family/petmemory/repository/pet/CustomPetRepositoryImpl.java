@@ -22,7 +22,24 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
     }
 
     @Override
-    public List<PetProfileForm> findPetProfile(Member member) {
+    public PetProfileForm findPetProfile(Long petId) {
+        return jpaQueryFactory
+                .select(new QPetProfileForm(pet.id,
+                                pet.name,
+                                pet.profile,
+                                memory.memoryType
+                        )
+                )
+                .from(pet)
+                .where(
+                        pet.id.eq(petId)
+                )
+                .leftJoin(memory).on(pet.profile.eq(memory.uploadFile.saveFileName))
+                .fetchOne();
+    }
+
+    @Override
+    public List<PetProfileForm> findPetProfiles(Member member) {
         return jpaQueryFactory
                 .select(new QPetProfileForm(pet.id,
                         pet.name,

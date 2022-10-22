@@ -52,8 +52,8 @@ class DataJpaMemoryRepositoryTest {
         memoryRepository.save(imageB);
         memoryRepository.save(imageC);
         memoryRepository.save(imageD);
-        List<Memory> memories = memoryRepository.search(new MemorySearchCondition(petA.getId(), null, MemoryStatus.NORMAL));
-        List<Memory> memory = memoryRepository.search(new MemorySearchCondition(null, imageA.getId(), MemoryStatus.NORMAL));
+        List<Memory> memories = memoryRepository.search(new MemorySearchCondition(petA.getId(), null, MemoryStatus.NORMAL, MemoryType.IMAGE));
+        List<Memory> memory = memoryRepository.search(new MemorySearchCondition(null, imageA.getId(), MemoryStatus.NORMAL, MemoryType.IMAGE));
 
         //then
         assertThat(petA.getMemories().size()).isEqualTo(4);

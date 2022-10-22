@@ -3,11 +3,14 @@
       layout:decorate="~{fragments/layout}">
 <body>
 <div layout:fragment="content" class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
-    <div th:each="memory : ${memories}">
-        <div>
-            <a href="#">
+    <div class="px-3 py-3" th:each="memory : ${memories}">
+        <div th:if="${memory.memoryType != null}">
+            <a th:if="${memory.memoryType == T(com.family.petmemory.entity.memory.MemoryType).IMAGE}" href="#">
                 <img src th:src="@{|/images/${memory.path}|}" class="img-thumbnail" th:alt="${memory.petName}" />
             </a>
+            <video controls th:if="${memory.memoryType == T(com.family.petmemory.entity.memory.MemoryType).VIDEO}">
+                <source src th:src="@{|/images/${memory.path}|}">
+            </video>
         </div>
     </div>
 </div>

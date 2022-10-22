@@ -39,8 +39,12 @@ public class PetService {
         return pet.getId();
     }
 
+    public PetProfileForm findMyPet(Long petId) {
+        return petRepository.findPetProfile(petId);
+    }
+
     public List<PetProfileForm> findMyPets(Member member) {
-        return petRepository.findPetProfile(member);
+        return petRepository.findPetProfiles(member);
     }
 
     public List<Pet> findPets() {

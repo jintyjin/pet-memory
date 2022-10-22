@@ -1,5 +1,6 @@
 package com.family.petmemory.entity.dto;
 
+import com.family.petmemory.entity.memory.MemoryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,5 +16,5 @@ public class MemoryShowForm {
 
     private String path;
 
-
+    private MemoryType memoryType;
 }

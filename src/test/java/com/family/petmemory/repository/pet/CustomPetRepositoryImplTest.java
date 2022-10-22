@@ -56,7 +56,7 @@ class CustomPetRepositoryImplTest {
         petB.changeProfile(imageC.getUploadFile().getSaveFileName());
 
         //when
-        List<PetProfileForm> petProfiles = petRepository.findPetProfile(memberA);
+        List<PetProfileForm> petProfiles = petRepository.findPetProfiles(memberA);
 
         //then
         assertThat(petProfiles.size()).isEqualTo(2);

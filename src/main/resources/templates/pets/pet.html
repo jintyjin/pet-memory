@@ -3,14 +3,14 @@
       layout:decorate="~{fragments/layout}">
 <body>
 <div layout:fragment="content" class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
-    <div class="px-3 py-3" th:each="petProfileForm : ${petProfileForms}">
+    <div class="px-3 py-3">
         <div th:if="${petProfileForm.type == null}">
-            <a href="#" th:href="@{|/memories/memory/${petProfileForm.id}|}">
+            <a href="#" th:href="@{|/pets/${petProfileForm.id}|}">
                 <img src th:src="@{/images/pet_thumbnail.png}" class="img-thumbnail" th:alt="${petProfileForm.name}" />
             </a>
         </div>
         <div th:if="${petProfileForm.type != null}">
-            <a th:if="${petProfileForm.type == T(com.family.petmemory.entity.memory.MemoryType).IMAGE}" href="#" th:href="@{|/memories/memory/${petProfileForm.id}|}">
+            <a th:if="${petProfileForm.type == T(com.family.petmemory.entity.memory.MemoryType).IMAGE}" href="#" th:href="@{|/pets/${petProfileForm.id}|}">
                 <img src th:src="@{|/images/${petProfileForm.path}|}" class="img-thumbnail" th:alt="${petProfileForm.name}" />
             </a>
             <video controls th:if="${petProfileForm.type == T(com.family.petmemory.entity.memory.MemoryType).VIDEO}">
@@ -18,7 +18,7 @@
             </video>
         </div>
         <div class="text-center">
-            <a href="#" th:href="@{|/memories/memory/${petProfileForm.id}|}" th:text="${petProfileForm.name}">
+            <a href="#" th:href="@{|/pets/${petProfileForm.id}|}" th:text="${petProfileForm.name}">
                 펫
             </a>
         </div>
