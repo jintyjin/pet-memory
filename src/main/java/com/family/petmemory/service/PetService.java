@@ -1,6 +1,7 @@
 package com.family.petmemory.service;
 
 import com.family.petmemory.entity.dto.MemoryForm;
+import com.family.petmemory.entity.dto.PetDetailForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
@@ -37,6 +38,10 @@ public class PetService {
         }
 
         return pet.getId();
+    }
+
+    public PetDetailForm findPetDetail(Long petId) {
+        return petRepository.findPetDetail(petId);
     }
 
     public PetProfileForm findMyPet(Long petId) {

@@ -1,5 +1,6 @@
 package com.family.petmemory.controller;
 
+import com.family.petmemory.entity.dto.PetDetailForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
@@ -52,8 +53,8 @@ public class PetController {
 
     @GetMapping("{petId}")
     public String pet(Model model, @PathVariable Long petId) {
-        PetProfileForm petProfileForm = petService.findMyPet(petId);
-        model.addAttribute("petProfileForm", petProfileForm);
+        PetDetailForm petDetail = petService.findPetDetail(petId);
+        model.addAttribute("petDetail", petDetail);
 
         return "/pets/pet";
     }

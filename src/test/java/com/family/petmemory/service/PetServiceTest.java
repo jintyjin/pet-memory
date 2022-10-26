@@ -1,11 +1,14 @@
 package com.family.petmemory.service;
 
+import com.family.petmemory.entity.dto.PetDetailForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
+import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import com.family.petmemory.repository.pet.PetRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +18,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +37,7 @@ class PetServiceTest {
     PetService petService;
 
     @Autowired
-    PetRepository petRepository;
+    DataJpaPetRepository petRepository;
 
     @Value("${file.dir}")
     String fileDir;
@@ -70,8 +74,8 @@ class PetServiceTest {
         Long savedId = memberRepository.save(member);
         Long savedPetId1 = petService.join(new PetForm(savedId, "이복댕", LocalDate.now(), file));
         Long savedPetId2 = petService.join(new PetForm(savedId, "이북댕", LocalDate.now(), file));
-        Pet findPet1 = petRepository.findById(savedPetId1);
-        Pet findPet2 = petRepository.findById(savedPetId2);
+        Pet findPet1 = petRepository.findById(savedPetId1).get();
+        Pet findPet2 = petRepository.findById(savedPetId2).get();
         findPet1.changeProfile(UUID.randomUUID().toString());
         findPet2.changeProfile(UUID.randomUUID().toString());
 
@@ -99,5 +103,28 @@ class PetServiceTest {
 
         //then
         assertThat(petProfileForms.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    void 펫상세정보() throws IOException {
+        //given
+        MockMultipartFile file = new MockMultipartFile("1.jpg", "1234.jpg", "image/jpg", new FileInputStream(fileDir + "/KakaoTalk_20200629_004002411.jpg"));
+        Member member = new Member("testMember123", "홍길동", "testMember!23", "jin@naver.com", LocalDate.now());
+        Long savedId = memberRepository.save(member);
+        Long savedPetId1 = petService.join(new PetForm(savedId, "이복댕", LocalDate.now(), file));
+        Long savedPetId2 = petService.join(new PetForm(savedId, "이북댕", LocalDate.now(), file));
+        Pet findPet1 = petRepository.findById(savedPetId1).get();
+        Pet findPet2 = petRepository.findById(savedPetId2).get();
+        findPet1.changeProfile(UUID.randomUUID().toString());
+        findPet2.changeProfile(UUID.randomUUID().toString());
+
+        //when
+        PetDetailForm petDetail1 = petService.findPetDetail(savedPetId1);
+        PetDetailForm petDetail2 = petService.findPetDetail(savedPetId2);
+
+        //then
+        org.junit.jupiter.api.Assertions.assertNotNull(petDetail1);
+        org.junit.jupiter.api.Assertions.assertNotNull(petDetail2);
     }
 }
