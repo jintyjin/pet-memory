@@ -9,7 +9,7 @@ import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.session.SessionConst;
 import com.family.petmemory.service.MemoryService;
 import com.family.petmemory.service.PetService;
-import com.family.petmemory.validation.MemoryForm.MemoryFormFilesValidator;
+import com.family.petmemory.validation.memoryForm.MemoryFormFilesValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

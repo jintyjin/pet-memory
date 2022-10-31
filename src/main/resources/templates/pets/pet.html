@@ -4,30 +4,42 @@
 <body>
 <div layout:fragment="content" class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
     <div class="px-3 py-3">
-        <form action="" th:action method="post">
-            <div th:if="${petDetail.type == null}" style="cursor:pointer">
-                <img src th:src="@{/images/pet_thumbnail.png}" class="img-thumbnail" th:alt="${petDetail.name}" />
+        <form action="" th:action th:object="${petDetail}" method="post">
+            <input type="hidden" id="id" name="id" th:field="*{id}" />
+            <div th:if="*{type == null}" style="cursor:pointer">
+                <img src th:src="@{/images/pet_thumbnail.png}" class="img-thumbnail" th:alt="*{name}" />
             </div>
             <div th:if="${petDetail.type != null}" style="cursor:pointer">
-                <img th:if="${petDetail.type == T(com.family.petmemory.entity.memory.MemoryType).IMAGE}" src th:src="@{|/images/${petDetail.path}|}" class="img-thumbnail" th:alt="${petDetail.name}" />
-                <video controls th:if="${petDetail.type == T(com.family.petmemory.entity.memory.MemoryType).VIDEO}">
-                    <source src th:src="@{|/images/${petDetail.path}|}">
+                <img th:if="*{type == T(com.family.petmemory.entity.memory.MemoryType).IMAGE}" src th:src="@{|/images/*{path}|}" class="img-thumbnail" th:alt="*{name}" />
+                <video controls th:if="*{type == T(com.family.petmemory.entity.memory.MemoryType).VIDEO}">
+                    <source src th:src="@{|/images/*{path}|}">
                 </video>
             </div>
-            <div class="text-center" th:text="${petDetail.name}">
+            <div class="text-center" th:text="*{name}">
             </div>
-            <div class="text-center" th:text="${petDetail.togetherTime.bornTime}">
+            <div class="text-center"
+                 th:text="${petDetail.petStatus == T(com.family.petmemory.entity.pet.PetStatus).LEAVE ? petDetail.bornTime + '~' + petDetail.leaveTime : petDetail.bornTime}">
             </div>
-            <div th:if="${petDetail.petStatus == T(com.family.petmemory.entity.pet.PetStatus).LEAVE}" class="text-center" th:text="@{| ~ ${petDetail.togetherTime.bornTime}|}">
-            </div>
-            <div class="text-center">
-                <input class="form-check-input" type="checkbox" value="isLeave" id="isLeave" name="isLeave" th:checked="${petDetail.petStatus == T(com.family.petmemory.entity.pet.PetStatus).LEAVE}" th:disabled="${petDetail.petStatus == T(com.family.petmemory.entity.pet.PetStatus).LEAVE}" onchange="showLeaveDate();">
+            <div class="text-center" th:if="*{petStatus == T(com.family.petmemory.entity.pet.PetStatus).NORMAL}">
+                <input class="form-check-input" type="checkbox" id="isLeave" name="isLeave" th:field="*{isLeave}" th:checked="*{isLeave}" th:disabled="*{isLeave}">
                 <label class="form-check-label" for="isLeave" th:text="#{label.petDetail.isLeave}">
                     별
                 </label>
             </div>
-            <div class="text-center">
-
+            <div>
+                <hr class="my-4">
+                <label for="bornTime" class="form-label" th:text="#{label.pet.leaveTime}">별이 된 날</label>
+                <input type="date" id="leaveTime" name="leaveTime" th:field="*{leaveTime}"
+                       th:errorclass="field-error" class="form-control" />
+                <div class="field-error" th:errors="*{leaveTime}">
+                    별이 된 날
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div>
+                        <button class="w-100 btn btn-primary" type="submit" th:text="#{button.memory.save}">저장</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

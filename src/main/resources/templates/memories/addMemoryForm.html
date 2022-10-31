@@ -6,7 +6,7 @@
         <form action="" th:action th:object="${memoryForm}" method="post" enctype="multipart/form-data">
             <div>
                 <label for="petId" class="form-label" th:text="#{label.memory.pet.name}">펫</label>
-                <select id="petId" name="petId" th:value="${memoryForm.petId}"
+                <select id="petId" name="petId" th:value="*{petId}"
                         class="form-select" aria-label="form-select">
                     <option th:value th:text="#{label.memory.pet.name}">펫 선택</option>
                     <option th:each="petIdAndName : ${petIdAndNameList}" th:value="${petIdAndName.id}" th:text="${petIdAndName.name}"></option>

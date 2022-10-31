@@ -1,14 +1,14 @@
-package com.family.petmemory.validation.MemoryForm;
+package com.family.petmemory.validation.petForm;
 
-import com.family.petmemory.entity.dto.MemoryForm;
+import com.family.petmemory.entity.dto.PetForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-public abstract class MemoryFormValidator implements Validator {
+public abstract class PetFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return MemoryForm.class.isAssignableFrom(clazz);
+        return PetForm.class.isAssignableFrom(clazz);
     }
 
     @Override

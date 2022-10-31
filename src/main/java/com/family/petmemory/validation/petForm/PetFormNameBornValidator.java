@@ -1,9 +1,7 @@
-package com.family.petmemory.validation.PetForm;
+package com.family.petmemory.validation.petForm;
 
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.repository.member.MemberRepository;
-import com.family.petmemory.repository.pet.DataJpaPetRepository;
-import com.family.petmemory.repository.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

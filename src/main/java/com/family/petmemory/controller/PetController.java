@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -51,11 +52,20 @@ public class PetController {
         return "/pets/pets";
     }
 
-    @GetMapping("{petId}")
+    @GetMapping("/{petId}")
     public String pet(Model model, @PathVariable Long petId) {
         PetDetailForm petDetail = petService.findPetDetail(petId);
         model.addAttribute("petDetail", petDetail);
 
         return "/pets/pet";
+    }
+
+    @PostMapping("/{petId}")
+    public String pet(@Validated PetDetailForm petDetailForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/pets/pet";
+        }
+
+        return "/pets/pets";
     }
 }

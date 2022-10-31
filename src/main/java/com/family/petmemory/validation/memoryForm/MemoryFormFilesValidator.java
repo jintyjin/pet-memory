@@ -1,4 +1,4 @@
-package com.family.petmemory.validation.MemoryForm;
+package com.family.petmemory.validation.memoryForm;
 
 import com.family.petmemory.entity.dto.MemoryForm;
 import org.springframework.stereotype.Component;
