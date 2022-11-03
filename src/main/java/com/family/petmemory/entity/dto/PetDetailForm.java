@@ -20,6 +20,7 @@ public class PetDetailForm {
 
     private String path;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bornTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -28,8 +29,6 @@ public class PetDetailForm {
     private PetStatus petStatus;
 
     private MemoryType type;
-
-    private Boolean isLeave;
 
     @QueryProjection
     public PetDetailForm(Long id, String name, String path, TogetherTime togetherTime, PetStatus petStatus, MemoryType type) {
@@ -40,8 +39,5 @@ public class PetDetailForm {
         this.leaveTime = togetherTime.getLeaveTime();
         this.petStatus = petStatus;
         this.type = type;
-        if (togetherTime.getLeaveTime() != null) {
-            this.isLeave = true;
-        }
     }
 }

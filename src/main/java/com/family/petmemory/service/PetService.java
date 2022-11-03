@@ -6,7 +6,6 @@ import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
-import com.family.petmemory.entity.pet.PetStatus;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -54,5 +54,10 @@ public class PetService {
 
     public List<Pet> findPets() {
         return petRepository.findAll();
+    }
+
+    @Transactional
+    public void leavePet(Long petId, LocalDate leaveTime) {
+        petRepository.findById(petId).ifPresent(pet -> pet.leave(leaveTime));
     }
 }

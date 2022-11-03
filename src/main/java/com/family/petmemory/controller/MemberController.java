@@ -3,6 +3,7 @@ package com.family.petmemory.controller;
 import com.family.petmemory.entity.dto.MemberForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.service.MemberService;
+import com.family.petmemory.validation.memberForm.MemberFormBirthFormValidator;
 import com.family.petmemory.validation.memberForm.MemberFormLoginIdFormValidator;
 import com.family.petmemory.validation.memberForm.MemberFormNameFormValidator;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,13 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberFormLoginIdFormValidator memberFormLoginIdValidator;
     private final MemberFormNameFormValidator memberFormNameValidator;
+    private final MemberFormBirthFormValidator memberFormBirthFormValidator;
 
     @InitBinder
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(memberFormLoginIdValidator);
         dataBinder.addValidators(memberFormNameValidator);
+        dataBinder.addValidators(memberFormBirthFormValidator);
     }
 
     @GetMapping("/new")

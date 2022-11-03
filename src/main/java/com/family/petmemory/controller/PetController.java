@@ -6,18 +6,20 @@ import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.session.SessionConst;
 import com.family.petmemory.service.PetService;
+import com.family.petmemory.validation.petDetailForm.PetDetailFormLeaveValidator;
+import com.family.petmemory.validation.petForm.PetFormBornValidator;
+import com.family.petmemory.validation.petForm.PetFormNameBornValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +28,20 @@ import java.util.stream.Collectors;
 public class PetController {
 
     private final PetService petService;
+    private final PetFormNameBornValidator petFormNameBornValidator;
+    private final PetFormBornValidator petFormBornValidator;
+    private final PetDetailFormLeaveValidator petDetailFormLeaveValidator;
+
+    @InitBinder("petForm")
+    public void initPetForm(WebDataBinder dataBinder) {
+        dataBinder.addValidators(petFormNameBornValidator);
+        dataBinder.addValidators(petFormBornValidator);
+    }
+
+    @InitBinder("petDetailForm")
+    public void initPetDetailForm(WebDataBinder dataBinder) {
+        dataBinder.addValidators(petDetailFormLeaveValidator);
+    }
 
     @GetMapping("/new")
     public String createForm(Model model, @SessionAttribute(SessionConst.LOGIN_MEMBER) Member member) {
@@ -54,8 +70,8 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public String pet(Model model, @PathVariable Long petId) {
-        PetDetailForm petDetail = petService.findPetDetail(petId);
-        model.addAttribute("petDetail", petDetail);
+        PetDetailForm petDetailForm = petService.findPetDetail(petId);
+        model.addAttribute("petDetailForm", petDetailForm);
 
         return "/pets/pet";
     }
@@ -65,6 +81,8 @@ public class PetController {
         if (bindingResult.hasErrors()) {
             return "/pets/pet";
         }
+
+        petService.leavePet(petDetailForm.getId(), petDetailForm.getLeaveTime());
 
         return "/pets/pets";
     }
