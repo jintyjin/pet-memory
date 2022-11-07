@@ -52,8 +52,8 @@ class CustomPetRepositoryImplTest {
         memoryRepository.save(imageB);
         memoryRepository.save(imageC);
         memoryRepository.save(imageD);
-        petA.changeProfile(imageA.getUploadFile().getSaveFileName());
-        petB.changeProfile(imageC.getUploadFile().getSaveFileName());
+        petA.changeProfile(imageA.getId());
+        petB.changeProfile(imageC.getId());
 
         //when
         List<PetProfileForm> petProfiles = petRepository.findPetProfiles(memberA);

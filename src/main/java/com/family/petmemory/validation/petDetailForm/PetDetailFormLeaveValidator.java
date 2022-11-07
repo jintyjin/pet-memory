@@ -20,6 +20,8 @@ public class PetDetailFormLeaveValidator extends PetDetailFormValidator {
             errors.rejectValue("leaveTime", "leaveTimeNull");
         } else if (bornTime.isAfter(leaveTime)) {
             errors.rejectValue("leaveTime", "canNotBeforeBornTime");
+        } else if (leaveTime.isAfter(LocalDate.now())) {
+            errors.rejectValue("leaveTime", "canNotAfterToday");
         }
     }
 }

@@ -3,12 +3,15 @@ package com.family.petmemory.entity.dto;
 import com.family.petmemory.entity.memory.MemoryType;
 import com.family.petmemory.entity.pet.PetStatus;
 import com.family.petmemory.entity.pet.TogetherTime;
+import com.family.petmemory.entity.pet.Weight;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +31,8 @@ public class PetDetailForm {
 
     private PetStatus petStatus;
 
+    private List<WeightForm> weights = new ArrayList<>();
+
     private MemoryType type;
 
     @QueryProjection
@@ -39,5 +44,9 @@ public class PetDetailForm {
         this.leaveTime = togetherTime.getLeaveTime();
         this.petStatus = petStatus;
         this.type = type;
+    }
+
+    public void addWeights(List<WeightForm> weights) {
+        this.weights = weights;
     }
 }

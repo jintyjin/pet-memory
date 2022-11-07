@@ -28,7 +28,7 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
         return jpaQueryFactory
                 .select(new QPetProfileForm(pet.id,
                                 pet.name,
-                                pet.profile,
+                                memory.uploadFile.saveFileName,
                                 memory.memoryType
                         )
                 )
@@ -36,7 +36,7 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
                 .where(
                         pet.id.eq(petId)
                 )
-                .leftJoin(memory).on(pet.profile.eq(memory.uploadFile.saveFileName))
+                .leftJoin(memory).on(pet.profile.eq(memory.id))
                 .fetchOne();
     }
 
@@ -45,7 +45,7 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
         return jpaQueryFactory
                 .select(new QPetProfileForm(pet.id,
                         pet.name,
-                        pet.profile,
+                        memory.uploadFile.saveFileName,
                         memory.memoryType
                         )
                 )
@@ -53,7 +53,7 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
                 .where(
                         pet.member.id.eq(member.getId())
                 )
-                .leftJoin(memory).on(pet.profile.eq(memory.uploadFile.saveFileName))
+                .leftJoin(memory).on(pet.profile.eq(memory.id))
                 .fetch();
     }
 
@@ -63,14 +63,18 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
                 .select(new QPetDetailForm(
                         pet.id,
                         pet.name,
-                        pet.profile,
+                        memory.uploadFile.saveFileName,
                         pet.togetherTime,
                         pet.petStatus,
                         memory.memoryType
                 ))
                 .from(pet)
                 .where(pet.id.eq(petId))
-                .leftJoin(memory).on(pet.id.eq(memory.pet.id))
+                .leftJoin(memory)
+                .on(
+                        pet.id.eq(memory.pet.id),
+                        pet.profile.eq(memory.id)
+                )
                 .fetchOne();
     }
 }

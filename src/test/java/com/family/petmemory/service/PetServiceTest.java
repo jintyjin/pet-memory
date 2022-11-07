@@ -76,8 +76,8 @@ class PetServiceTest {
         Long savedPetId2 = petService.join(new PetForm(savedId, "이북댕", LocalDate.now(), file));
         Pet findPet1 = petRepository.findById(savedPetId1).get();
         Pet findPet2 = petRepository.findById(savedPetId2).get();
-        findPet1.changeProfile(UUID.randomUUID().toString());
-        findPet2.changeProfile(UUID.randomUUID().toString());
+        findPet1.changeProfile(1L);
+        findPet2.changeProfile(2L);
 
         //when
         List<PetProfileForm> pets = petService.findMyPets(member);
@@ -116,8 +116,8 @@ class PetServiceTest {
         Long savedPetId2 = petService.join(new PetForm(savedId, "이북댕", LocalDate.now(), file));
         Pet findPet1 = petRepository.findById(savedPetId1).get();
         Pet findPet2 = petRepository.findById(savedPetId2).get();
-        findPet1.changeProfile(UUID.randomUUID().toString());
-        findPet2.changeProfile(UUID.randomUUID().toString());
+        findPet1.changeProfile(1L);
+        findPet2.changeProfile(2L);
 
         //when
         PetDetailForm petDetail1 = petService.findPetDetail(savedPetId1);

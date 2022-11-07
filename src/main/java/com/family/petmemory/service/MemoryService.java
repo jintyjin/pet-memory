@@ -35,8 +35,8 @@ public class MemoryService {
     private String fileDir;
 
     @Transactional
-    public String join(MemoryForm memoryForm) {
-        String profile = null;
+    public Long join(MemoryForm memoryForm) {
+        Long profile = null;
         Optional<Pet> optionalPet = petRepository.findById(memoryForm.getPetId());
         if (optionalPet.isPresent()) {
             Pet findPet = optionalPet.get();
@@ -75,13 +75,13 @@ public class MemoryService {
         }
     }
 
-    private String saveFiles(List<MemoryDto> files, String profile, int i) throws IOException {
+    private Long saveFiles(List<MemoryDto> files, Long profile, int i) throws IOException {
         MemoryDto memoryDto = files.get(i);
-        memoryRepository.save(new Memory(memoryDto.getUploadFile(), memoryDto.getPet(), MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase())));
+        Memory savedMemory = memoryRepository.save(new Memory(memoryDto.getUploadFile(), memoryDto.getPet(), MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase())));
         MultipartFile file = memoryDto.getFile();
         file.transferTo(new File(fileDir + memoryDto.getUploadFile().getSaveFileName()));
         if (i == 0) {
-            profile = memoryDto.getUploadFile().getSaveFileName();
+            profile = savedMemory.getId();
         }
         return profile;
     }

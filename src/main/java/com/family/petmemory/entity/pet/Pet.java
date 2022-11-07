@@ -26,13 +26,16 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     private List<Memory> memories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "pet")
+    private List<Weight> weights = new ArrayList<>();
+
     @Embedded
     private TogetherTime togetherTime;
 
     @Enumerated(EnumType.STRING)
     private PetStatus petStatus;
 
-    private String profile;
+    private Long profile;
 
     protected Pet() {
     }
@@ -54,7 +57,11 @@ public class Pet {
         this.memories.add(image);
     }
 
-    public void changeProfile(String profile) {
+    public void addWeight(Weight weight) {
+        this.weights.add(weight);
+    }
+
+    public void changeProfile(Long profile) {
         this.profile = profile;
     }
 }
