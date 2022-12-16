@@ -28,8 +28,10 @@
             <div>
                 <hr class="my-4">
                 <div id="petWeightChart" style="width:800px; height:500px;">
-
                 </div>
+                <script th:inline="javascript">
+                    window.onload = showChart([[*{name}]]);
+                </script>
                 <hr class="my-4">
                 <div class="row">
                     <div>
