@@ -5,6 +5,7 @@ import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.dto.QPetDetailForm;
 import com.family.petmemory.entity.dto.QPetProfileForm;
 import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.pet.QWeight;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -61,11 +62,8 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
     public PetDetailForm findPetDetail(Long petId) {
         return jpaQueryFactory
                 .select(new QPetDetailForm(
-                        pet.id,
-                        pet.name,
+                        pet,
                         memory.uploadFile.saveFileName,
-                        pet.togetherTime,
-                        pet.petStatus,
                         memory.memoryType
                 ))
                 .from(pet)
@@ -77,4 +75,5 @@ public class CustomPetRepositoryImpl implements CustomPetRepository {
                 )
                 .fetchOne();
     }
+
 }

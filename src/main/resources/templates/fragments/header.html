@@ -10,6 +10,9 @@
   <script th:src="@{/js/canvasJs/canvasjs.min.js}"
           src="../js/canvasJs/canvasjs.min.js">
   </script>
+  <script th:src="@{/js/jquery-3.6.2.min.js}"
+          src="../js/jquery-3.6.2.min.js">
+  </script>
   <style>
     a {
         color: black;
@@ -58,6 +61,13 @@
   });
   chart.render();
 }
+  $('#staticBackdrop').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    console.log(recipient);
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    var modal = $(this)
+    modal.find('.modal-body img').attr(recipient);
+  });
   </script>
 </head>
 <body>

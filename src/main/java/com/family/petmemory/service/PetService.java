@@ -40,9 +40,9 @@ public class PetService {
     }
 
     public PetDetailForm findPetDetail(Long petId) {
-        List<WeightForm> weightForms = weightRepository.findWeightForm(petId);
+//        List<WeightForm> weightForms = weightRepository.findWeightForm(petId);
+//        petDetailForm.addWeights(weightForms);
         PetDetailForm petDetailForm = petRepository.findPetDetail(petId);
-        petDetailForm.addWeights(weightForms);
         return petDetailForm;
     }
 

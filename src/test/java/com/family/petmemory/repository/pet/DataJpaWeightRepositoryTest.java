@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,8 +44,8 @@ class DataJpaWeightRepositoryTest {
         petRepository.save(pet);
 
         //when
-        weightRepository.save(new Weight(8.85F, LocalDate.of(2022, 12, 31), pet));
-        weightRepository.save(new Weight(8.65F, LocalDate.now(), pet));
+        weightRepository.save(new Weight(BigDecimal.valueOf(8.85), LocalDate.of(2022, 12, 31), pet));
+        weightRepository.save(new Weight(BigDecimal.valueOf(8.65), LocalDate.now(), pet));
         PetDetailForm petDetail = petService.findPetDetail(pet.getId());
 
         //then

@@ -3,6 +3,7 @@ package com.family.petmemory.entity.pet;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -13,7 +14,8 @@ public class Weight {
     @Column(name = "weight_id")
     private Long id;
 
-    private Float weight;
+    @Column(scale = 2)
+    private BigDecimal weight;
 
     private LocalDate date;
 
@@ -24,7 +26,7 @@ public class Weight {
     protected Weight() {
     }
 
-    public Weight(Float weight, LocalDate date, Pet pet) {
+    public Weight(BigDecimal weight, LocalDate date, Pet pet) {
         this.weight = weight;
         this.date = date;
         this.pet = pet;
