@@ -3,6 +3,7 @@ package com.family.petmemory.controller;
 import com.family.petmemory.entity.dto.PetDetailForm;
 import com.family.petmemory.entity.dto.PetForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
+import com.family.petmemory.entity.dto.WeightForm;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.session.SessionConst;
 import com.family.petmemory.service.PetService;

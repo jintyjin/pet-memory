@@ -33,10 +33,16 @@
     }
   </style>
   <script>
-    function showChart(petName) {
-    var weights = [
-            { x: new Date(), y: 8.51}
-          ];
+    function checkSession() {
+      let session = "[[${session.loginMember}]]";
+      if (session == "") {
+        window.close();
+      }
+    }
+    function showChart(weights, petName) {
+<!--    var weights = [-->
+<!--            { x: new Date(), y: 8.51}-->
+<!--          ];-->
     var chart = new CanvasJS.Chart("petWeightChart",
       {
           title: {
@@ -58,9 +64,15 @@
           dataPoints: weights
         }
       ]
-  });
-  chart.render();
-}
+    });
+    chart.render();
+  }
+  function deleteWeight(page, text) {
+    console.log(page);
+    if (confirm(text)) {
+      window.location.replace(page);
+    }
+  }
   $('#staticBackdrop').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     console.log(recipient);

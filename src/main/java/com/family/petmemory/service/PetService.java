@@ -3,6 +3,7 @@ package com.family.petmemory.service;
 import com.family.petmemory.entity.dto.*;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.entity.pet.Weight;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import com.family.petmemory.repository.pet.DataJpaWeightRepository;
@@ -40,8 +41,6 @@ public class PetService {
     }
 
     public PetDetailForm findPetDetail(Long petId) {
-//        List<WeightForm> weightForms = weightRepository.findWeightForm(petId);
-//        petDetailForm.addWeights(weightForms);
         PetDetailForm petDetailForm = petRepository.findPetDetail(petId);
         return petDetailForm;
     }
@@ -62,4 +61,5 @@ public class PetService {
     public void leavePet(Long petId, LocalDate leaveTime) {
         petRepository.findById(petId).ifPresent(pet -> pet.leave(leaveTime));
     }
+
 }

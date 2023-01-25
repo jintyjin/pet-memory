@@ -25,20 +25,9 @@
             <div class="text-center"
                  th:text="${petDetailForm.petStatus == T(com.family.petmemory.entity.pet.PetStatus).LEAVE ? petDetailForm.bornTime + '~' + petDetailForm.leaveTime : petDetailForm.bornTime}">
             </div>
-            <div>
-                <hr class="my-4">
-                <div id="petWeightChart" style="width:800px; height:500px;">
-                </div>
-                <script th:inline="javascript">
-                    window.onload = showChart([[*{name}]]);
-                </script>
-                <hr class="my-4">
-                <div class="row">
-                    <div>
-                        <button class="w-100 btn btn-primary" type="button" th:text="#{button.pet.weight.update}"
-                                onclick="window.open('/pets')">수정</button>
-                    </div>
-                </div>
+            <div><hr class="my-4"></div>
+            <div class="text-center">
+                <button class="btn btn-primary" type="button" th:text="#{button.pet.weight}" onclick="" th:onclick="|window.open('@{|/weights/*{id}|}')|">몸무게</button>
             </div>
             <div th:if="*{petStatus == T(com.family.petmemory.entity.pet.PetStatus).NORMAL}">
                 <hr class="my-4">

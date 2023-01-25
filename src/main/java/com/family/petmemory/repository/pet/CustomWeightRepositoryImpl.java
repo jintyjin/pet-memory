@@ -1,6 +1,7 @@
 package com.family.petmemory.repository.pet;
 
-import com.family.petmemory.entity.dto.QWeightForm;
+import com.family.petmemory.entity.dto.QWeightDto;
+import com.family.petmemory.entity.dto.WeightDto;
 import com.family.petmemory.entity.dto.WeightForm;
 import com.family.petmemory.entity.pet.QWeight;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,9 +20,9 @@ public class CustomWeightRepositoryImpl implements CustomWeightRepository {
     }
 
     @Override
-    public List<WeightForm> findWeightForm(Long petId) {
+    public List<WeightDto> findWeightForm(Long petId) {
         return jpaQueryFactory
-                .select(new QWeightForm(weight1.id, weight1.date, weight1.weight))
+                .select(new QWeightDto(weight1.id, weight1.date, weight1.weight))
                 .from(weight1)
                 .where(weight1.pet.id.eq(petId))
                 .orderBy(weight1.date.asc())
