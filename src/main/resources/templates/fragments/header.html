@@ -39,10 +39,14 @@
         window.close();
       }
     }
-    function showChart(weights, petName) {
-<!--    var weights = [-->
-<!--            { x: new Date(), y: 8.51}-->
-<!--          ];-->
+    function showChart(weightsArr, petName) {
+      var weights = [];
+      for (var i = 0; i < weightsArr.length; i++) {
+        weights.push({
+          x : new Date(weightsArr[i].date),
+          y : weightsArr[i].weight
+        });
+      }
     var chart = new CanvasJS.Chart("petWeightChart",
       {
           title: {
@@ -54,7 +58,8 @@
           },
           axisY: {
             title: "",
-		    suffix: " kg"
+		    suffix: " kg",
+		    includeZero: true
         },
         data: [{
           type: "spline",
