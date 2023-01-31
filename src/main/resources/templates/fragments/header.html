@@ -31,6 +31,121 @@
     video {
         max-height:225px;
     }
+    /* detail.html 시작 */
+    /* 배경 */
+    .KJca8b {
+      background-color:#000;
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+    }
+    /* 메뉴 바 */
+    .SmZ4Wd {
+        align-items:center;
+      display:flex;
+      justify-content:space-between;
+      background-color:transparent;
+      color:#fff;
+      height:64px;
+      left:0;
+      padding:0 14px;
+      position:absolute;
+      right:0;
+      top:0;
+      z-index:200;
+      transform:translateZ(0);
+      transition:all 0.5s linear;
+    }
+    .VfPpkd-Bz112c-LgbsSe {
+      /* margin:8px 0; */
+      text-align:center;
+      vertical-align:bottom;
+      z-index:0;
+      display:inline-block;
+      position:relative;
+      box-sizing:border-box;
+      border:none;
+      outline:none;
+      background-color:transparent;
+      fill:currentColor;
+      text-decoration:none;
+      cursor:pointer;
+      width:48px;
+      height:48px;
+      padding:12px;
+      --mdc-ripple-fg-size:0x;
+      --mdc-ripple-left:0;
+      --mdc-ripple-top:0;
+      --mdc-ripple-fg-scale:1;
+      --mdc-ripple-fg-translate-end:0;
+      --mdc-ripple-fg-translate-start:0;
+      -webkit-tap-highlight-color:rgba(0,0,0,0);
+      will-change:transform,opacity;
+      transition:all 0.5s linear;
+      color:#fff;
+    }
+    .VfPpkd-Bz112c-LgbsSe:hover {
+	  background-color:rgba(90,90,90,.25);
+	  border-radius:50%;
+    }
+    .WpHeLc {
+      position:relative;
+      top:-4px;
+    }
+    .JUQOtc {
+      fill:#fff;
+    }
+    .xvKqge {
+      color:#fff;
+      display:flex;
+      flex:1 1 auto;
+      justify-content:flex-end;
+    }
+    .c9yG5b {
+      align-items: center;
+      display: inline-flex;
+	  transition:all 0.5s linear;
+    }
+    .G6iPcb {
+      margin: 8px 0;
+      display: inline-block;
+      min-width: 0;
+      vertical-align: bottom;
+    }
+    .O8EXO {
+      color:#fff;
+    }
+    .yHy1rc {
+      z-index:0;
+    }
+    .sideBar {
+        position:absolute;
+        top:0;
+        bottom:0;
+        right:0;
+        min-width:360px;
+        max-width:360px;
+        overflow-y:auto;
+        transform:translate3d(360px, 0, 0);
+        transition:transform 0.5s linear;
+    }
+    .IMbeAf {
+      font-family: "Google Sans",Roboto,Arial,sans-serif;
+      line-height: 1.5rem;
+      font-size: 1.125rem;
+      letter-spacing: 0;
+      font-weight: 400;
+      display: flex;
+      -ms-flex-pack: justify;
+      align-items: center;
+      -ms-flex-align: center;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      padding: 8px;
+    }
+    /* detail.html 종료 */
   </style>
   <script>
     function checkSession() {
@@ -78,13 +193,6 @@
       window.location.replace(page);
     }
   }
-  $('#staticBackdrop').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    console.log(recipient);
-    var recipient = button.data('whatever') // Extract info from data-* attributes
-    var modal = $(this)
-    modal.find('.modal-body img').attr(recipient);
-  });
   </script>
 </head>
 <body>

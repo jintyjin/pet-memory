@@ -80,4 +80,11 @@ public class MemoryController {
 
         return "/memories/memories";
     }
+
+    @GetMapping("/memory/detail/{memoryId}")
+    public String detail(Model model, @PathVariable Long memoryId) {
+
+
+        return "/memories/detail";
+    }
 }
