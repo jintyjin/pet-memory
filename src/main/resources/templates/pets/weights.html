@@ -6,7 +6,7 @@
     checkSession();
 </script>
 <div class="container-fluid px-3 py-3 d-flex justify-content-center flex-wrap">
-    <form action="" th:action th:object="${weightForm}" method="post">
+    <form name="weightForm" action="" th:action th:object="${weightForm}" method="post" th:onsubmit="return checkWeightData();">
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{petName}" />
         <div class="px-3 py-3 text-center">
@@ -49,8 +49,8 @@
             </div>
             <hr class="my-4">
             <div class="row justify-content-md-center" th:each="weightDto, itemStat : *{weightDtoList}">
-                <div class="col-md-auto" th:field=|weightFormList[${itemStat.index}].date| th:text="${weightDto.date}"></div>
-                <div class="col-md-auto" th:field=|weightFormList[${itemStat.index}].weight| th:text="@{|${weightDto.weight} kg|}"></div>
+                <div class="col-md-auto" th:id="${weightDto.date}" th:text="${weightDto.date}"></div>
+                <div class="col-md-auto" th:text="@{|${weightDto.weight} kg|}"></div>
                 <div class="col-md-auto">
                     <button type="button" class="btn-close" aria-label="Close"
                             onclick=""
