@@ -50,9 +50,9 @@ class DataJpaWeightRepositoryTest {
 
         //then
         System.out.println("petDetail.getPath() = " + petDetail.getPath());
-        for (WeightForm weight : petDetail.getWeights()) {
+        /*for (WeightForm weight : petDetail.getWeights()) {
             System.out.println("weight.getDate() = " + weight.getDate());
             System.out.println("weight.getWeight() = " + weight.getWeight());
-        }
+        }*/
     }
 }

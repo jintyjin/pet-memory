@@ -109,8 +109,8 @@ class CustomPetRepositoryImplTest {
                 .stream()
                 .forEach(weight -> System.out.println(weight.getDate() + " / " + weight.getWeight()));
 
-        petDetail.getWeights()
-                .stream()
-                .forEach(weightForm -> System.out.println(weightForm.getDate() + " / " + weightForm.getWeight()));
+//        petDetail.getWeights()
+//                .stream()
+//                .forEach(weightForm -> System.out.println(weightForm.getDate() + " / " + weightForm.getWeight()));
     }
 }
