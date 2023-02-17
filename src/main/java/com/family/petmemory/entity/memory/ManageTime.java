@@ -10,13 +10,15 @@ import java.time.LocalDateTime;
 public class ManageTime {
 
     private LocalDateTime uploadTime;
+    private LocalDateTime imageTime;
     private LocalDateTime deleteTime;
 
     protected ManageTime() {
     }
 
-    public ManageTime(LocalDateTime uploadTime) {
+    public ManageTime(LocalDateTime uploadTime, LocalDateTime imageTime) {
         this.uploadTime = uploadTime;
+        this.imageTime = imageTime;
     }
 
     public void delete(LocalDateTime deleteTime) {
