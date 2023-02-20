@@ -1,11 +1,17 @@
 package com.family.petmemory.service;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
+import com.drew.metadata.exif.ExifDirectoryBase;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.drew.metadata.exif.GpsDirectory;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
 import com.family.petmemory.entity.member.Member;
-import com.family.petmemory.entity.memory.Memory;
-import com.family.petmemory.entity.memory.MemoryStatus;
-import com.family.petmemory.entity.memory.MemoryType;
-import com.family.petmemory.entity.memory.UploadFile;
+import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
@@ -26,7 +32,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,7 +75,7 @@ class MemoryServiceTest {
         for (MultipartFile file : list) {
             String saveFileName = file.getName() + "." + file.getContentType().split("/")[1];
             String uploadFileName = file.getOriginalFilename();
-            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), petA, MemoryType.valueOf(file.getContentType().split("/")[0].toUpperCase())));
+            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.valueOf(file.getContentType().split("/")[0].toUpperCase())));
             File saveFile = new File(fileDir + saveFileName);
             file.transferTo(saveFile);
 //            saveFile.delete();
@@ -120,7 +129,7 @@ class MemoryServiceTest {
         list.add(file4);
 
         for (MultipartFile file : list) {
-            memoryRepository.save(new Memory(new UploadFile(file.getOriginalFilename(), file.getName()), petA, MemoryType.IMAGE));
+            memoryRepository.save(new Memory(new UploadFile(file.getOriginalFilename(), file.getName()), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE));
         }
 
         List<Memory> findMemories = memoryRepository.search(new MemorySearchCondition(petA.getId(), null, MemoryStatus.NORMAL, null));
@@ -131,5 +140,36 @@ class MemoryServiceTest {
             System.out.println("findMemory.getUploadFile().getSaveFileName() = " + findMemory.getUploadFile().getSaveFileName());
         }
         System.out.println("findMemories.size() = " + findMemories.size());
+    }
+
+    @Test
+    void 시간_메타데이터_확인() throws IOException, ImageProcessingException {
+        //given
+        File file = new File(fileDir + "/IMG_3543.HEIC");
+
+        //when
+        Metadata metadata = ImageMetadataReader.readMetadata(file);
+
+        ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+
+        Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+
+        //then
+        System.out.println("data = " + localDateTime);
+    }
+
+    @Test
+    void GPS_데이터_확인() throws IOException, ImageProcessingException {
+        //given
+        File file = new File(fileDir + "/IMG_3543.HEIC");
+
+        //when
+        Metadata metadata = ImageMetadataReader.readMetadata(file);
+        GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
+
+        //then
+        System.out.println(directory.getGeoLocation().getLongitude());
+        System.out.println(directory.getGeoLocation().getLatitude());
     }
 }
