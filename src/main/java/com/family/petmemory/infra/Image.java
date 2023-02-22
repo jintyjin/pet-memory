@@ -15,7 +15,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class Image {
-    public static LocalDateTime getLocalDateTime(File file) throws ImageProcessingException, IOException {
+    public static LocalDateTime extractLocalDateTime(File file) throws ImageProcessingException, IOException {
         Metadata metadata = ImageMetadataReader.readMetadata(file);
 
         ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
@@ -25,7 +25,7 @@ public class Image {
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
-    public static Gps getGps(File file) throws ImageProcessingException, IOException {
+    public static Gps extractGps(File file) throws ImageProcessingException, IOException {
         Metadata metadata = ImageMetadataReader.readMetadata(file);
 
         GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
