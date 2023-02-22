@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class Image {
+public class ImageUtil {
     public static LocalDateTime extractLocalDateTime(File file) throws ImageProcessingException, IOException {
         Metadata metadata = ImageMetadataReader.readMetadata(file);
 
@@ -22,7 +22,12 @@ public class Image {
 
         Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
 
-        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        try {
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+            return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        } catch(NullPointerException e) {
+            return null;
+        }
     }
 
     public static Gps extractGps(File file) throws ImageProcessingException, IOException {
@@ -32,6 +37,10 @@ public class Image {
 
         GeoLocation geoLocation = directory.getGeoLocation();
 
-        return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
+        try {
+            return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
+        } catch(NullPointerException e) {
+            return null;
+        }
     }
 }
