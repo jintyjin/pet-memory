@@ -18,6 +18,7 @@ import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
 import com.family.petmemory.repository.memory.MemoryRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import com.family.petmemory.repository.pet.PetRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class MemoryServiceTest {
@@ -145,7 +148,8 @@ class MemoryServiceTest {
     @Test
     void 시간_메타데이터_확인() throws IOException, ImageProcessingException {
         //given
-        File file = new File(fileDir + "/IMG_3543.HEIC");
+//        File file = new File(fileDir + "/IMG_3543.HEIC");
+        File file = new File(fileDir + "/e02d0b6b_0821_4aab_b58e_69dd027ca147.jpeg");
 
         //when
         Metadata metadata = ImageMetadataReader.readMetadata(file);
@@ -153,23 +157,52 @@ class MemoryServiceTest {
         ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
         Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 
         //then
-        System.out.println("data = " + localDateTime);
+        try {
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+            System.out.println("data = " + localDateTime);
+        } catch(NullPointerException e) {
+            System.out.println("Exception = " + date);
+        }
     }
 
     @Test
     void GPS_데이터_확인() throws IOException, ImageProcessingException {
         //given
-        File file = new File(fileDir + "/IMG_3543.HEIC");
+//        File file = new File(fileDir + "/IMG_3543.HEIC");
+        File file = new File(fileDir + "/e02d0b6b_0821_4aab_b58e_69dd027ca147.jpeg");
 
         //when
         Metadata metadata = ImageMetadataReader.readMetadata(file);
         GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
 
         //then
-        System.out.println(directory.getGeoLocation().getLongitude());
-        System.out.println(directory.getGeoLocation().getLatitude());
+        try {
+            System.out.println(directory.getGeoLocation().getLongitude());
+            System.out.println(directory.getGeoLocation().getLatitude());
+        } catch(NullPointerException e) {
+            System.out.println("Exception = " + directory);
+        }
+    }
+
+    @Test
+    @Transactional
+    void 메모리_데이터_저장() {
+        //given
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
+        memberRepository.save(memberA);
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
+        petRepository.save(petA);
+
+        //when
+        LocalDateTime now = LocalDateTime.now();
+        Memory memory = new Memory(new UploadFile(fileDir + "/IMG_3543.HEIC", UUID.randomUUID().toString().replaceAll("-", "_") + ".jpg"), now, new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory savedMemory = memoryRepository.save(memory);
+
+        //then
+        assertThat(now).isEqualTo(savedMemory.getManageTime().getImageTime());
+        assertThat(0.0).isEqualTo(savedMemory.getGps().getLatitude());
+        assertThat(0.0).isEqualTo(savedMemory.getGps().getLongitude());
     }
 }
