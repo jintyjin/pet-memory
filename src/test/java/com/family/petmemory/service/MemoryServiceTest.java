@@ -163,6 +163,7 @@ class MemoryServiceTest {
             LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
             System.out.println("data = " + localDateTime);
         } catch(NullPointerException e) {
+            System.out.println("Exception = " + directory);
             System.out.println("Exception = " + date);
         }
     }
