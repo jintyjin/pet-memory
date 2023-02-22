@@ -3,6 +3,7 @@ package com.family.petmemory.repository.pet;
 import com.family.petmemory.entity.dto.PetDetailForm;
 import com.family.petmemory.entity.dto.PetProfileForm;
 import com.family.petmemory.entity.member.Member;
+import com.family.petmemory.entity.memory.Gps;
 import com.family.petmemory.entity.memory.Memory;
 import com.family.petmemory.entity.memory.MemoryType;
 import com.family.petmemory.entity.memory.UploadFile;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
@@ -51,10 +53,10 @@ class CustomPetRepositoryImplTest {
         Pet petB = new Pet("petB", memberA, LocalDate.now());
         petRepository.save(petA);
         petRepository.save(petB);
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA, MemoryType.IMAGE);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA, MemoryType.IMAGE);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petB, MemoryType.IMAGE);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petB, MemoryType.IMAGE);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
         memoryRepository.save(imageA);
         memoryRepository.save(imageB);
         memoryRepository.save(imageC);
@@ -84,10 +86,10 @@ class CustomPetRepositoryImplTest {
         memberRepository.save(memberA);
         Pet petA = new Pet("petA", memberA, LocalDate.now());
         petRepository.save(petA);
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), petA, MemoryType.IMAGE);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), petA, MemoryType.IMAGE);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), petA, MemoryType.IMAGE);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), petA, MemoryType.IMAGE);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
         memoryRepository.save(imageA);
         memoryRepository.save(imageB);
         memoryRepository.save(imageC);
