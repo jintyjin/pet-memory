@@ -22,12 +22,11 @@ public class ImageUtil {
 
         Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
 
-        try {
-            LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-            return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-        } catch(NullPointerException e) {
+        if (date == null) {
             return null;
         }
+
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     public static Gps extractGps(File file) throws ImageProcessingException, IOException {
@@ -35,12 +34,11 @@ public class ImageUtil {
 
         GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
 
-        GeoLocation geoLocation = directory.getGeoLocation();
-
-        try {
-            return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
-        } catch(NullPointerException e) {
+        if (directory == null) {
             return null;
         }
+
+        GeoLocation geoLocation = directory.getGeoLocation();
+        return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
     }
 }
