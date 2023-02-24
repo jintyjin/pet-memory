@@ -4,11 +4,15 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifDirectoryBase;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
+import com.drew.metadata.heif.HeifDirectory;
+import com.drew.metadata.jpeg.JpegDirectory;
+import com.drew.metadata.png.PngDirectory;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.*;
@@ -28,6 +32,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -78,7 +84,7 @@ class MemoryServiceTest {
         for (MultipartFile file : list) {
             String saveFileName = file.getName() + "." + file.getContentType().split("/")[1];
             String uploadFileName = file.getOriginalFilename();
-            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.valueOf(file.getContentType().split("/")[0].toUpperCase())));
+            memoryRepository.save(new Memory(new UploadFile(uploadFileName, saveFileName), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.valueOf(file.getContentType().split("/")[0].toUpperCase())));
             File saveFile = new File(fileDir + saveFileName);
             file.transferTo(saveFile);
 //            saveFile.delete();
@@ -132,7 +138,7 @@ class MemoryServiceTest {
         list.add(file4);
 
         for (MultipartFile file : list) {
-            memoryRepository.save(new Memory(new UploadFile(file.getOriginalFilename(), file.getName()), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE));
+            memoryRepository.save(new Memory(new UploadFile(file.getOriginalFilename(), file.getName()), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE));
         }
 
         List<Memory> findMemories = memoryRepository.search(new MemorySearchCondition(petA.getId(), null, MemoryStatus.NORMAL, null));
@@ -198,12 +204,26 @@ class MemoryServiceTest {
 
         //when
         LocalDateTime now = LocalDateTime.now();
-        Memory memory = new Memory(new UploadFile(fileDir + "/IMG_3543.HEIC", UUID.randomUUID().toString().replaceAll("-", "_") + ".jpg"), now, new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory memory = new Memory(new UploadFile(fileDir + "/IMG_3543.HEIC", UUID.randomUUID().toString().replaceAll("-", "_") + ".jpg"), now, new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
         Memory savedMemory = memoryRepository.save(memory);
 
         //then
         assertThat(now).isEqualTo(savedMemory.getManageTime().getImageTime());
         assertThat(0.0).isEqualTo(savedMemory.getGps().getLatitude());
         assertThat(0.0).isEqualTo(savedMemory.getGps().getLongitude());
+    }
+
+    @Test
+    void 이미지_크기_데이터_추출() throws IOException {
+        //given
+        File file = new File(fileDir + "/e5335e5c_49f3_491b_b1dd_e16d95725ebc.jpeg");
+//        File file = new File(fileDir + "/e02d0b6b_0821_4aab_b58e_69dd027ca147.jpeg");
+
+        //when
+        BufferedImage bi = ImageIO.read(file);
+
+        //then
+        System.out.println("bi.getWidth() = " + bi.getWidth());
+        System.out.println("bi.getHeight() = " + bi.getHeight());
     }
 }

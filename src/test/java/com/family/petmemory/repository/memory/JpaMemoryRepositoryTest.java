@@ -1,9 +1,6 @@
 package com.family.petmemory.repository.memory;
 
-import com.family.petmemory.entity.memory.Gps;
-import com.family.petmemory.entity.memory.Memory;
-import com.family.petmemory.entity.memory.MemoryType;
-import com.family.petmemory.entity.memory.UploadFile;
+import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.MemberRepository;
@@ -46,10 +43,10 @@ class JpaMemoryRepositoryTest {
         petRepository.save(petA);
 
         //when
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
         Long savedId = imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);
@@ -76,10 +73,10 @@ class JpaMemoryRepositoryTest {
         petRepository.save(petB);
 
         //when
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg", "/home/folder/imageA.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0),petB, MemoryType.IMAGE);
         imageRepository.save(imageA);
         imageRepository.save(imageB);
         imageRepository.save(imageC);

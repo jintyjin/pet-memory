@@ -7,7 +7,10 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 import com.family.petmemory.entity.memory.Gps;
+import com.family.petmemory.entity.memory.ImageSize;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -40,5 +43,11 @@ public class ImageUtil {
 
         GeoLocation geoLocation = directory.getGeoLocation();
         return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
+    }
+
+    public static ImageSize extractImageSize(File file) throws IOException {
+        BufferedImage bi = ImageIO.read(file);
+
+        return new ImageSize(bi.getWidth(), bi.getHeight());
     }
 }

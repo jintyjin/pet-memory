@@ -5,11 +5,8 @@ import com.family.petmemory.entity.dto.MemoryDto;
 import com.family.petmemory.entity.dto.MemoryForm;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
 import com.family.petmemory.entity.dto.MemoryShowForm;
-import com.family.petmemory.entity.memory.Gps;
-import com.family.petmemory.entity.memory.MemoryStatus;
-import com.family.petmemory.entity.memory.MemoryType;
+import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
-import com.family.petmemory.entity.memory.Memory;
 import com.family.petmemory.infra.ImageUtil;
 import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
@@ -98,7 +95,8 @@ public class MemoryService {
         File file = new File(path);
         LocalDateTime imageTime = ImageUtil.extractLocalDateTime(file);
         Gps gps = ImageUtil.extractGps(file);
-        return memoryRepository.save(new Memory(memoryDto.getUploadFile(), imageTime, gps, memoryDto.getPet(), MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase())));
+        ImageSize imageSize = ImageUtil.extractImageSize(file);
+        return memoryRepository.save(new Memory(memoryDto.getUploadFile(), imageTime, imageSize, gps, memoryDto.getPet(), MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase())));
     }
 
     private String saveImage(MemoryDto memoryDto) throws IOException {

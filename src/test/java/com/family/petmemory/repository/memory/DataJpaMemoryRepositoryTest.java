@@ -42,10 +42,10 @@ class DataJpaMemoryRepositoryTest {
         petRepository.save(petA);
 
         //when
-        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg",  "/home/folder/imageA.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
-        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
-        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
-        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg",  "/home/folder/imageA.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory imageB = new Memory(new UploadFile("/home/folder/imageB.jpg", "/home/folder/imageB.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory imageC = new Memory(new UploadFile("/home/folder/imageC.jpg", "/home/folder/imageC.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        Memory imageD = new Memory(new UploadFile("/home/folder/imageD.jpg", "/home/folder/imageD.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
         memoryRepository.save(imageA);
         memoryRepository.save(imageB);
         memoryRepository.save(imageC);

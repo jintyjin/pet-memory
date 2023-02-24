@@ -21,6 +21,9 @@ public class Memory {
     private ManageTime manageTime;
 
     @Embedded
+    private ImageSize imageSize;
+
+    @Embedded
     private Gps gps;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,12 +41,13 @@ public class Memory {
     protected Memory() {
     }
 
-    public Memory(UploadFile uploadFile, LocalDateTime imageTime, Gps gps, Pet pet, MemoryType memoryType) {
+    public Memory(UploadFile uploadFile, LocalDateTime imageTime, ImageSize imageSize, Gps gps, Pet pet, MemoryType memoryType) {
         this.uploadFile = uploadFile;
+        this.manageTime = new ManageTime(LocalDateTime.now(), imageTime);
+        this.imageSize = imageSize;
         this.gps = gps;
         this.pet = pet;
         this.pet.addImage(this);
-        this.manageTime = new ManageTime(LocalDateTime.now(), imageTime);
         this.memoryStatus = memoryStatus.NORMAL;
         this.memoryType = memoryType;
         this.info = "";
