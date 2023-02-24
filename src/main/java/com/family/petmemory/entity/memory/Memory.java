@@ -43,7 +43,7 @@ public class Memory {
 
     public Memory(UploadFile uploadFile, LocalDateTime imageTime, ImageSize imageSize, Gps gps, Pet pet, MemoryType memoryType) {
         this.uploadFile = uploadFile;
-        this.manageTime = new ManageTime(LocalDateTime.now(), imageTime);
+        this.manageTime = new ManageTime(imageTime);
         this.imageSize = imageSize;
         this.gps = gps;
         this.pet = pet;

@@ -1,6 +1,8 @@
 package com.family.petmemory.entity.memory;
 
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
@@ -9,15 +11,20 @@ import java.time.LocalDateTime;
 @Getter
 public class ManageTime {
 
-    private LocalDateTime uploadTime;
+    @CreationTimestamp
+    private LocalDateTime uploadTime = LocalDateTime.now();
+
+    @UpdateTimestamp
+    private LocalDateTime updateTime = LocalDateTime.now();
+
     private LocalDateTime imageTime;
+
     private LocalDateTime deleteTime;
 
     protected ManageTime() {
     }
 
-    public ManageTime(LocalDateTime uploadTime, LocalDateTime imageTime) {
-        this.uploadTime = uploadTime;
+    public ManageTime(LocalDateTime imageTime) {
         this.imageTime = imageTime;
     }
 
