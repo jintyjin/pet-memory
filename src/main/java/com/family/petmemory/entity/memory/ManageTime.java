@@ -11,10 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 public class ManageTime {
 
-    @CreationTimestamp
     private LocalDateTime uploadTime = LocalDateTime.now();
 
-    @UpdateTimestamp
     private LocalDateTime updateTime = LocalDateTime.now();
 
     private LocalDateTime imageTime;
@@ -26,6 +24,10 @@ public class ManageTime {
 
     public ManageTime(LocalDateTime imageTime) {
         this.imageTime = imageTime;
+    }
+
+    public void update(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 
     public void delete(LocalDateTime deleteTime) {
