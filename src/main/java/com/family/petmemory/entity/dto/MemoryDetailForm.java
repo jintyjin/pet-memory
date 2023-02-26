@@ -1,5 +1,9 @@
 package com.family.petmemory.entity.dto;
 
+import com.family.petmemory.entity.memory.Gps;
+import com.family.petmemory.entity.memory.ImageSize;
+import com.family.petmemory.entity.memory.UploadFile;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,13 +17,19 @@ public class MemoryDetailForm {
 
     private LocalDateTime imageTime;
 
-    private String imageName;
+    private UploadFile uploadFile;
 
-    private int width;  // 이미지 너비
+    private ImageSize imageSize;
 
-    private int height; // 이미지 크기
+    private Gps gps;
 
-    private Double Latitude;    // 위도
-
-    private Double Longitude;   // 경도
+    @QueryProjection
+    public MemoryDetailForm(Long memoryId, String info, LocalDateTime imageTime, UploadFile uploadFile, ImageSize imageSize, Gps gps) {
+        this.memoryId = memoryId;
+        this.info = info;
+        this.imageTime = imageTime;
+        this.uploadFile = uploadFile;
+        this.imageSize = imageSize;
+        this.gps = gps;
+    }
 }

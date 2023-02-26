@@ -8,14 +8,14 @@ import javax.persistence.Embeddable;
 @Getter
 public class Gps {
 
-    private Double Latitude;
-    private Double Longitude;
+    private Double latitude;
+    private Double longitude;
 
     protected Gps() {
     }
 
-    public Gps(Double Latitude, Double Longitude) {
-        this.Latitude = Latitude;
-        this.Longitude = Longitude;
+    public Gps(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

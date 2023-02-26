@@ -23,8 +23,11 @@
             </div>
          </span>
       </div>
+      <div class="VmkiKe">
+         <img src th:src="|/images/${memoryDetailForm.uploadFile.saveFileName}|" style="max-width:100%; max-height:100%;" />
+      </div>
    </div>
-   <div class="sideBar">
+   <div class="sideBar" th:object="${memoryDetailForm}">
       <div>
          <!-- 정보 시작 -->
          <div class="IMbeAf">
@@ -41,8 +44,8 @@
             <div class="zE2Vqb">
                <div class="qURWqc">
                   <div class="Mna4i">
-                     <div th:text="#{detail.sideBar.explain.placeholder}" class="n4jc2d"></div>
-                     <textarea class="ajQY2" th:placeholder="#{detail.sideBar.explain.placeholder}" th:onkeydown="resize(this)" th:onkeyup="resize(this)"></textarea>
+<!--                     <div th:text="#{detail.sideBar.explain.placeholder}" class="n4jc2d"></div>-->
+                     <input type="text" class="ajQY2" th:value="${memoryDetailForm.info}" th:placeholder="#{detail.sideBar.explain.placeholder}" maxlength="20" th:onchange="changeMemoryInfo(this.value, [[${memoryDetailForm.memoryId}]]);" /><!--  th:onkeydown="resize(this)" th:onkeyup="resize(this)" -->
                      <span class="gqI68"></span>
                   </div>
                </div>
@@ -60,9 +63,10 @@
                         </svg>
                      </dt>
                      <dd class="rCexAf">
-                        <div class="R9U8ab">2020년 7월 6일</div>
+                        <div class="R9U8ab" th:if="${memoryDetailForm.imageTime == null}" th:text="#{detail.sideBar.noDate}"></div>
+                        <div class="R9U8ab" th:unless="${memoryDetailForm.imageTime == null}" th:text="${#temporals.format(memoryDetailForm.imageTime)}"></div>
                         <div class="oBMhZb">
-                           <span class="sprMUb">월 오후 5:03</span>
+                           <span class="sprMUb" th:text="${#temporals.dayOfWeekName(memoryDetailForm.imageTime)}"></span>
                            <!--<span class="sprMUb">GMT+09:00</span>-->
                         </div>
                      </dd>
@@ -75,16 +79,16 @@
                      </svg>
                   </dt>
                   <dd class="rCexAf">
-                     <div class="R9U8ab">KakaoTalk_20200629_004005067.jpg</div>
+                     <div class="R9U8ab" th:text="*{uploadFile.uploadFileName}"></div>
                      <div class="oBMhZb">
                         <!--<span class="sprMUb">0.7백만 화소</span>-->
-                        <span class="sprMUb">960×720</span>
+                        <span class="sprMUb" th:text="|*{imageSize.width}x*{imageSize.height}|">960×720</span>
                      </div>
                   </dd>
                </div>
-               <div jscontroller="OIiP1" jsaction="rcuQ6b:WYd;mzck7d:rpou1e;" data-mapurl="https://maps.googleapis.com/maps/api/staticmap?center=37.5363972,126.9503028&amp;markers=37.5363972,126.9503028&amp;size=360x360&amp;zoom=14&amp;scale=2&amp;client=google-photos&amp;signature=nJkrYNxDByYO51_kN80oONyJqbk%3D" data-show-alias-location="true">
-                  <div jsname="dM0yo">
-                     <div class="ffq9nc WAICmc GHWQBd" jsaction="click:Y4gmLb;" tabindex="0" jsname="yHbGQd" jslog="118871; track:click">
+               <div>
+                  <div>
+                     <div class="ffq9nc WAICmc GHWQBd">
                         <dt class="dNjXAc">
                            <svg width="24px" height="24px" class="v1262d JUQOtc Y0p3Ue" viewBox="0 0 24 24">
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
@@ -92,8 +96,9 @@
                            </svg>
                         </dt>
                         <dd class="rCexAf" jsname="IvhB6d">
-                           <div jsname="rdDVee">
-                              <div class="R9U8ab">서울특별시</div>
+                           <div>
+                              <div class="R9U8ab" th:if="*{gps == null}" th:text="#{detail.sideBar.noGps}"></div>
+                              <div class="R9U8ab" th:unless="*{gps == null}" id="address"></div>
                            </div>
                         </dd>
                         <svg width="18px" height="18px" class="v1262d JUQOtc F6wuZ" viewBox="0 0 24 24">
@@ -102,7 +107,7 @@
                      </div>
                      <div class="cFLCHe" id="map"></div>
                      <script th:inline="javascript">
-                        window.onload = showMap(37.5363972, 126.9503028);
+                        window.onload = showMap([[*{gps}]]);
                      </script>
                   </div>
                </div>

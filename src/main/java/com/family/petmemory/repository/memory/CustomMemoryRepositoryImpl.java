@@ -1,6 +1,8 @@
 package com.family.petmemory.repository.memory;
 
+import com.family.petmemory.entity.dto.MemoryDetailForm;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
+import com.family.petmemory.entity.dto.QMemoryDetailForm;
 import com.family.petmemory.entity.memory.Memory;
 import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.memory.MemoryType;
@@ -36,6 +38,18 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                 .limit(MAX_COUNT)
                 .orderBy(memory.manageTime.uploadTime.desc(), memory.id.asc())
                 .fetch();
+    }
+
+    @Override
+    public MemoryDetailForm findMemoryDetail(Long memoryId) {
+        return jpaQueryFactory
+                .select(new QMemoryDetailForm(
+                        memory.id, memory.info, memory.manageTime.imageTime,
+                        memory.uploadFile, memory.imageSize, memory.gps
+                ))
+                .from(memory)
+                .where(memory.id.eq(memoryId))
+                .fetchOne();
     }
 
     private BooleanExpression memoryTypeEq(MemoryType memoryType) {

@@ -1,16 +1,12 @@
 package com.family.petmemory.service;
 
 import com.drew.imaging.ImageProcessingException;
-import com.family.petmemory.entity.dto.MemoryDto;
-import com.family.petmemory.entity.dto.MemoryForm;
-import com.family.petmemory.entity.dto.MemorySearchCondition;
-import com.family.petmemory.entity.dto.MemoryShowForm;
+import com.family.petmemory.entity.dto.*;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.infra.ImageUtil;
 import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
-import com.family.petmemory.repository.pet.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -104,5 +101,22 @@ public class MemoryService {
         String path = fileDir + memoryDto.getUploadFile().getSaveFileName();
         file.transferTo(new File(path));
         return path;
+    }
+
+    public MemoryDetailForm showMemoryDetail(Long memoryId) {
+        return memoryRepository.findMemoryDetail(memoryId);
+    }
+
+    @Transactional
+    public String updateMemoryInfo(MemoryDetailUpdateInfoDto saveInfoDto) {
+        AtomicReference<String> response = new AtomicReference<>();
+
+        memoryRepository.findById(saveInfoDto.getMemoryId())
+                .ifPresent(memory -> {
+                    memory.updateInfo(saveInfoDto.getInfo());
+                    response.set("OK");
+                });
+
+        return response.get();
     }
 }

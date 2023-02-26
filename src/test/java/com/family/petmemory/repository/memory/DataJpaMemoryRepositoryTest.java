@@ -1,11 +1,13 @@
 package com.family.petmemory.repository.memory;
 
+import com.family.petmemory.entity.dto.MemoryDetailForm;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
 import com.family.petmemory.repository.member.JpaMemberRepository;
 import com.family.petmemory.repository.member.MemberRepository;
+import com.family.petmemory.repository.pet.DataJpaPetRepository;
 import com.family.petmemory.repository.pet.PetRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,7 @@ class DataJpaMemoryRepositoryTest {
     MemberRepository memberRepository;
 
     @Autowired
-    PetRepository petRepository;
+    DataJpaPetRepository petRepository;
 
     @Autowired
     DataJpaMemoryRepository memoryRepository;
@@ -57,5 +59,22 @@ class DataJpaMemoryRepositoryTest {
         assertThat(petA.getMemories().size()).isEqualTo(4);
         assertThat(memories.size()).isEqualTo(4);
         assertThat(memory.size()).isEqualTo(1);
+    }
+
+    @Test
+    void 메모리_상세_정보_가져오기() {
+        //given
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
+        memberRepository.save(memberA);
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
+        petRepository.save(petA);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg",  "/home/folder/imageA.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        memoryRepository.save(imageA);
+
+        //when
+        MemoryDetailForm memoryDetail = memoryRepository.findMemoryDetail(imageA.getId());
+
+        //then
+        assertThat(memoryDetail.getMemoryId()).isEqualTo(imageA.getId());
     }
 }

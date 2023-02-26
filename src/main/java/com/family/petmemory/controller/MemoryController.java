@@ -1,9 +1,6 @@
 package com.family.petmemory.controller;
 
-import com.family.petmemory.entity.dto.MemoryForm;
-import com.family.petmemory.entity.dto.MemoryShowForm;
-import com.family.petmemory.entity.dto.PetIdAndName;
-import com.family.petmemory.entity.dto.PetProfileForm;
+import com.family.petmemory.entity.dto.*;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.session.SessionConst;
@@ -33,7 +30,7 @@ public class MemoryController {
     private final MemoryService memoryService;
     private final MemoryFormFilesValidator memoryFormFilesValidator;
 
-    @InitBinder
+    @InitBinder("memoryForm")
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(memoryFormFilesValidator);
     }
@@ -83,8 +80,24 @@ public class MemoryController {
 
     @GetMapping("/memory/detail/{memoryId}")
     public String detail(Model model, @PathVariable Long memoryId) {
+        MemoryDetailForm memoryDetailForm = memoryService.showMemoryDetail(memoryId);
 
+        model.addAttribute("memoryDetailForm", memoryDetailForm);
 
         return "/memories/detail";
+    }
+
+    @PostMapping("/memory/detail/update/info")
+    @ResponseBody
+    public String updateDetailInfo(@RequestBody MemoryDetailUpdateInfoDto saveInfoDto) {
+        String response = null;
+
+        try {
+            response = memoryService.updateMemoryInfo(saveInfoDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response;
     }
 }

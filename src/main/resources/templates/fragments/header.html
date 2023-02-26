@@ -13,7 +13,8 @@
   <script th:src="@{/js/jquery-3.6.2.min.js}"
           src="../js/jquery-3.6.2.min.js">
   </script>
-  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f03997c9ab3ebbb5b7ec9d5eab20e0e3"></script>
+  <!--<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f03997c9ab3ebbb5b7ec9d5eab20e0e3"></script>-->
+  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f03997c9ab3ebbb5b7ec9d5eab20e0e3&libraries=services"></script>
   <style>
     a {
         color: black;
@@ -121,6 +122,24 @@
     .yHy1rc {
       z-index:0;
     }
+    /* 이미지 div */
+    .VmkiKe {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: all 0.5s linear;
+    }
+    .VmkiKe:after {
+      display:inline-block;
+      height:100%;
+      content:"";
+      vertical-align:middle;
+    }
+    /* 사이드 바 */
     .sideBar {
         position:absolute;
         top:0;
@@ -181,7 +200,7 @@
       outline: none;
       overflow: hidden;
       padding: 0;
-      position: absolute;
+<!--      position: absolute;-->
       resize: none;
       top: 0;
       transition: .3s cubic-bezier(.4,0,.2,1) all;
@@ -333,8 +352,11 @@
       let sideBar = document.getElementsByClassName(className)[0];
       let topMenuName = 'SmZ4Wd';
       let topMenu = document.getElementsByClassName(topMenuName)[0];
+      let imageDivName = 'VmkiKe';
+      let imageDiv = document.getElementsByClassName(imageDivName)[0];
       sideBar.style.transform = 'translate3d(0, 0, 0)';
       topMenu.style.right = '360px';
+      imageDiv.style.right = '360px';
       element.setAttribute('onclick', 'hideSideBar(this, "' + className + '")');
     }
 
@@ -343,36 +365,78 @@
       let sideBar = document.getElementsByClassName(className)[0];
       let topMenuName = 'SmZ4Wd';
       let topMenu = document.getElementsByClassName(topMenuName)[0];
+      let imageDivName = 'VmkiKe';
+      let imageDiv = document.getElementsByClassName(imageDivName)[0];
       sideBar.style.transform = 'translate3d(360px, 0, 0)';
       topMenu.style.right = '0px';
+      imageDiv.style.right = '0px';
       if (element === undefined) {
         element = document.getElementsByClassName('info')[0];
       }
       element.setAttribute('onclick', 'showSideBar(this, "' + className + '")');
+    }
+    function changeMemoryInfo(info, memoryId) {
+      var json = {"memoryId" : memoryId, "info" : info}
+
+      $.ajax({
+        url : "/memories/memory/detail/update/info",
+        type : "post",
+        data : JSON.stringify(json),
+        contentType:"application/json;charset=UTF-8",
+	    async: false,
+	    success : function(data) {
+	      if (data == null) {
+	        alert('Error');
+	      }
+	    },
+	    error: function(xhr, status, error){
+	       alert(xhr.responseText);
+	    },
+      });
     }
     function resize(element) {
       element.style.height = "1px";
       element.style.height = (12 + element.scrollHeight) + "px";
       console.log($(element).prop('scrollHeight'));
     }
-    function showMap(x, y) {
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-      mapOption = {
-          center: new kakao.maps.LatLng(x, y), // 지도의 중심좌표
-          level: 5 // 지도의 확대 레벨
+    function showMap(gps) {
+      if (gps != null) {
+        var x = gps.latitude;
+        var y = gps.longitude;
+        showAddress(x, y);  // 주소 표시 함수
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(x, y), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        var markerPosition  = new kakao.maps.LatLng(x, y);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+      }
+    }
+
+    function showAddress(x, y) {
+      var geocoder = new kakao.maps.services.Geocoder();
+
+      var coord = new kakao.maps.LatLng(x, y);
+      var callback = function(result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+              var address = document.getElementById('address');
+              address.innerText = result[0].address.address_name;
+              //console.log('그런 너를 마주칠까 ' + result[0].address.address_name + '을 못가');
+          }
       };
-      // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-      var map = new kakao.maps.Map(mapContainer, mapOption);
 
-      var markerPosition  = new kakao.maps.LatLng(x, y);
-
-      // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
-          position: markerPosition
-      });
-
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(map);
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     }
 
     /*$(document).ready(function() {

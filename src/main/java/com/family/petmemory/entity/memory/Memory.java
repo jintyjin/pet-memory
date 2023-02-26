@@ -61,6 +61,10 @@ public class Memory {
         }
     }
 
+    public void updateInfo(String info) {
+        this.info = info;
+    }
+
     private boolean isProfile() {
         return this.pet.getProfile() != null && this.pet.getProfile().equals(this.getUploadFile().getSaveFileName());
     }
