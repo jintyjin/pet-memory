@@ -33,6 +33,30 @@
     video {
         max-height:225px;
     }
+
+    /* memory.html 시작 */
+    .SxgK2b {
+      /*background: rgba(66,66,66,.54);*/
+      border-radius: 28px;
+      cursor: pointer;
+      position: absolute;
+      /*
+      top: 50%;
+      margin-top: -28px;
+      width: 100%;
+      */
+      text-align: center;
+      transition: all 0.5s linear;
+      left: 50%;
+      margin-left: -27px;
+      opacity : 0;
+    }
+    .Cwtbxf:hover {
+	  background-color:rgba(26,115,232,.25);
+	  border-radius:50%;
+    }
+    /* memory.html 종료 */
+
     /* detail.html 시작 */
     /* 배경 */
     .KJca8b {
@@ -347,6 +371,14 @@
         window.location.replace(page);
       }
     }
+    function showImageMenu(id) {
+      var parent = document.getElementById(id);
+      parent.getElementsByClassName('SxgK2b')[0].style.opacity = 1;
+    }
+    function hideImageMenu(id) {
+      var parent = document.getElementById(id);
+      parent.getElementsByClassName('SxgK2b')[0].style.opacity = 0;
+    }
     function showSideBar(element) {
       let className = 'sideBar';
       let sideBar = document.getElementsByClassName(className)[0];
@@ -401,18 +433,26 @@
     }
     function showMap(gps) {
       if (gps != null) {
-        var x = gps.latitude;
-        var y = gps.longitude;
-        showAddress(x, y);  // 주소 표시 함수
+        var latitude = gps.latitude;
+        var longitude = gps.longitude;
+        showAddress(latitude, longitude);  // 주소 표시 함수
+        var map = makeMap(latitude, longitude);
+        drawMarker(latitude, longitude, map);
+      }
+    }
+
+    function makeMap(latitude, longitude) {
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
-            center: new kakao.maps.LatLng(x, y), // 지도의 중심좌표
+            center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
             level: 5 // 지도의 확대 레벨
         };
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
+        return new kakao.maps.Map(mapContainer, mapOption);
+    }
 
-        var markerPosition  = new kakao.maps.LatLng(x, y);
+    function drawMarker(latitude, longitude, map) {
+        var markerPosition  = new kakao.maps.LatLng(latitude, longitude);
 
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
@@ -421,7 +461,18 @@
 
         // 마커가 지도 위에 표시되도록 설정합니다
         marker.setMap(map);
+    }
+
+    function showWalkMap(dataList) {
+      var latitude = 37.53650277777778; // 초기값
+      var longitude = 126.950225; // 초기값
+      for (var i = 0; i < dataList.length; i++) {
+        latitude = dataList[i].gps.latitude;
+        longitude = dataList[i].gps.longitude;
       }
+      var map = makeMap(latitude, longitude);
+      drawMarker(latitude, longitude, map);
+      console.log(dataList);
     }
 
     function showAddress(x, y) {
@@ -432,7 +483,6 @@
           if (status === kakao.maps.services.Status.OK) {
               var address = document.getElementById('address');
               address.innerText = result[0].address.address_name;
-              //console.log('그런 너를 마주칠까 ' + result[0].address.address_name + '을 못가');
           }
       };
 

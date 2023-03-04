@@ -92,8 +92,9 @@ public class MemoryService {
         File file = new File(path);
         LocalDateTime imageTime = ImageUtil.extractLocalDateTime(file);
         Gps gps = ImageUtil.extractGps(file);
-        ImageSize imageSize = ImageUtil.extractImageSize(file);
-        return memoryRepository.save(new Memory(memoryDto.getUploadFile(), imageTime, imageSize, gps, memoryDto.getPet(), MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase())));
+        MemoryType memoryType = MemoryType.valueOf(memoryDto.getFile().getContentType().split("/")[0].toUpperCase());
+        ImageSize imageSize = ImageUtil.extractImageSize(file, memoryType);
+        return memoryRepository.save(new Memory(memoryDto.getUploadFile(), imageTime, imageSize, gps, memoryDto.getPet(), memoryType));
     }
 
     private String saveImage(MemoryDto memoryDto) throws IOException {
@@ -118,5 +119,9 @@ public class MemoryService {
                 });
 
         return response.get();
+    }
+
+    public List<MemoryWalkForm> showMemoryWalk(Long petId) {
+        return memoryRepository.findMemoryWalk(petId);
     }
 }

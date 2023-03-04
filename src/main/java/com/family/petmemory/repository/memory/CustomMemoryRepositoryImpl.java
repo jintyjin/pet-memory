@@ -1,8 +1,6 @@
 package com.family.petmemory.repository.memory;
 
-import com.family.petmemory.entity.dto.MemoryDetailForm;
-import com.family.petmemory.entity.dto.MemorySearchCondition;
-import com.family.petmemory.entity.dto.QMemoryDetailForm;
+import com.family.petmemory.entity.dto.*;
 import com.family.petmemory.entity.memory.Memory;
 import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.memory.MemoryType;
@@ -52,6 +50,23 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                 .fetchOne();
     }
 
+    @Override
+    public List<MemoryWalkForm> findMemoryWalk(Long petId) {
+        return jpaQueryFactory
+                .select(new QMemoryWalkForm(
+                        memory.id, memory.uploadFile.saveFileName, memory.manageTime.imageTime,
+                        memory.imageSize, memory.gps, memory.memoryStatus, memory.memoryType
+                ))
+                .from(memory)
+                .where(
+                        memory.pet.id.eq(petId),
+                        memory.memoryType.eq(MemoryType.IMAGE),
+                        memory.gps.isNotNull()
+                )
+                .orderBy(memory.manageTime.imageTime.asc())
+                .fetch();
+    }
+
     private BooleanExpression memoryTypeEq(MemoryType memoryType) {
         return memoryType == null ? null : memory.memoryType.eq(memoryType);
     }
@@ -67,6 +82,4 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
     private BooleanExpression memoryStatusEq(MemoryStatus memoryStatus) {
         return memoryStatus == null ? null : memory.memoryStatus.eq(memoryStatus);
     }
-
-
 }
