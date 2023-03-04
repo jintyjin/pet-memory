@@ -8,13 +8,13 @@ import javax.persistence.Embeddable;
 @Getter
 public class ImageSize {
 
-    private int width;
-    private int height;
+    private Integer width;
+    private Integer height;
 
     protected ImageSize() {
     }
 
-    public ImageSize(int width, int height) {
+    public ImageSize(Integer width, Integer height) {
         this.width = width;
         this.height = height;
     }

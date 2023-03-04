@@ -8,6 +8,7 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 import com.family.petmemory.entity.memory.Gps;
 import com.family.petmemory.entity.memory.ImageSize;
+import com.family.petmemory.entity.memory.MemoryType;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,9 +24,13 @@ public class ImageUtil {
 
         ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
+        if (checkNull(directory)) {
+            return null;
+        }
+
         Date date = directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
 
-        if (date == null) {
+        if (checkNull(date)) {
             return null;
         }
 
@@ -37,7 +42,7 @@ public class ImageUtil {
 
         GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
 
-        if (directory == null) {
+        if (checkNull(directory)) {
             return null;
         }
 
@@ -45,9 +50,21 @@ public class ImageUtil {
         return new Gps(geoLocation.getLatitude(), geoLocation.getLongitude());
     }
 
-    public static ImageSize extractImageSize(File file) throws IOException {
-        BufferedImage bi = ImageIO.read(file);
+    public static ImageSize extractImageSize(File file, MemoryType memoryType) throws IOException {
+        ImageSize imageSize = null;
 
-        return new ImageSize(bi.getWidth(), bi.getHeight());
+        if (memoryType == MemoryType.IMAGE) {
+            BufferedImage bi = ImageIO.read(file);
+            imageSize = new ImageSize(bi.getWidth(), bi.getHeight());
+        }
+
+        return imageSize;
+    }
+
+    private static boolean checkNull(Object object) {
+        if (object == null) {
+            return true;
+        }
+        return false;
     }
 }

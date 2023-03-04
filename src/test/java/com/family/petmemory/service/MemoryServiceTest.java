@@ -204,7 +204,8 @@ class MemoryServiceTest {
     @Test
     void 이미지_크기_데이터_추출() throws IOException {
         //given
-        File file = new File(fileDir + "/e5335e5c_49f3_491b_b1dd_e16d95725ebc.jpeg");
+        File file = new File(fileDir + "/pet_thumbnail.png");
+//        File file = new File(fileDir + "/e5335e5c_49f3_491b_b1dd_e16d95725ebc.jpeg");
 //        File file = new File(fileDir + "/e02d0b6b_0821_4aab_b58e_69dd027ca147.jpeg");
 
         //when
