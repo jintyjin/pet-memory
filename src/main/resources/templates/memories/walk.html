@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<script th:inline="javascript">
+    checkSession();
+</script>
+    <div id="map" style="position:absolute; width:100%; height:100%;"></div>
+    <script th:inline="javascript">
+        window.onload = showWalkMap([[${memoryWalkForms}]]);
+    </script>
+</body>
+</html>
