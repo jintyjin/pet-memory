@@ -109,4 +109,10 @@ public class MemoryController {
 
         return "/memories/walk";
     }
+
+    @PostMapping("/walk/info")
+    @ResponseBody
+    public MemoryWalkInfoDto showWalkInfo(@RequestBody Long memoryId) {
+        return memoryService.showMemoryWalkInfo(memoryId);
+    }
 }

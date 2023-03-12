@@ -124,4 +124,8 @@ public class MemoryService {
     public List<MemoryWalkForm> showMemoryWalk(Long petId) {
         return memoryRepository.findMemoryWalk(petId);
     }
+
+    public MemoryWalkInfoDto showMemoryWalkInfo(Long memoryId) {
+        return memoryRepository.findMemoryWalkInfo(memoryId);
+    }
 }
