@@ -67,6 +67,19 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                 .fetch();
     }
 
+    @Override
+    public MemoryWalkInfoDto findMemoryWalkInfo(Long memoryId) {
+        return jpaQueryFactory
+                .select(
+                        new QMemoryWalkInfoDto(
+                                memory.id, memory.info, memory.manageTime.imageTime, memory.uploadFile, memory.imageSize
+                        )
+                )
+                .from(memory)
+                .where(memory.id.eq(memoryId))
+                .fetchOne();
+    }
+
     private BooleanExpression memoryTypeEq(MemoryType memoryType) {
         return memoryType == null ? null : memory.memoryType.eq(memoryType);
     }

@@ -2,6 +2,7 @@ package com.family.petmemory.repository.memory;
 
 import com.family.petmemory.entity.dto.MemoryDetailForm;
 import com.family.petmemory.entity.dto.MemorySearchCondition;
+import com.family.petmemory.entity.dto.MemoryWalkInfoDto;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
@@ -76,5 +77,22 @@ class DataJpaMemoryRepositoryTest {
 
         //then
         assertThat(memoryDetail.getMemoryId()).isEqualTo(imageA.getId());
+    }
+
+    @Test
+    void 메모리_산책_상세_정보_데이터_가져오기() {
+        //given
+        Member memberA = new Member("memberA", "주인1", "암호1", "jin@naver.com", LocalDate.now());
+        memberRepository.save(memberA);
+        Pet petA = new Pet("petA", memberA, LocalDate.now());
+        petRepository.save(petA);
+        Memory imageA = new Memory(new UploadFile("/home/folder/imageA.jpg",  "/home/folder/imageA.jpg"), LocalDateTime.now(), new ImageSize(0, 0), new Gps(0.0, 0.0), petA, MemoryType.IMAGE);
+        memoryRepository.save(imageA);
+
+        //when
+        MemoryWalkInfoDto memoryWalkInfo = memoryRepository.findMemoryWalkInfo(imageA.getId());
+
+        //then
+        assertThat(memoryWalkInfo.getMemoryId()).isEqualTo(imageA.getId());
     }
 }
