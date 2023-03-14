@@ -174,6 +174,7 @@
         transform:translate3d(360px, 0, 0);
         transition:transform 0.5s linear;
         background-color:#fff;
+        z-index:1;
     }
     .IMbeAf {
       font-family: "Google Sans",Roboto,Arial,sans-serif;
@@ -293,10 +294,15 @@
       background-position: 50% 50%;
       background-size: 360px;
       height: 360px;
+      text-align: center;
     }
     /* detail.html 종료 */
   </style>
   <script>
+    /* 월 */
+    let months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+    /* 요일 */
+    let days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
     function checkSession() {
       let session = "[[${session.loginMember}]]";
       if (session == "") {
@@ -343,7 +349,6 @@
       return false;
     }
     function isSameDate(id) {
-      console.log(document.getElementById(id));
       return document.getElementById(id);
     }
     function checkWeightData() {
@@ -379,33 +384,38 @@
       var parent = document.getElementById(id);
       parent.getElementsByClassName('SxgK2b')[0].style.opacity = 0;
     }
-    function showSideBar(element) {
-      let className = 'sideBar';
-      let sideBar = document.getElementsByClassName(className)[0];
-      let topMenuName = 'SmZ4Wd';
-      let topMenu = document.getElementsByClassName(topMenuName)[0];
-      let imageDivName = 'VmkiKe';
-      let imageDiv = document.getElementsByClassName(imageDivName)[0];
-      sideBar.style.transform = 'translate3d(0, 0, 0)';
-      topMenu.style.right = '360px';
-      imageDiv.style.right = '360px';
-      element.setAttribute('onclick', 'hideSideBar(this, "' + className + '")');
+    function showDetailSideBar() {
+      let right = '0px';
+      let pushRight = '360px';
+      pushSideBar(right);
+      pushAsideTopMenu(pushRight);
+      pushAsideImage(pushRight);
+      let info = document.getElementsByClassName('info')[0];
+      info.setAttribute('onclick', 'hideDetailSideBar()');
     }
-
-    function hideSideBar(element) {
+    function hideDetailSideBar() {
+      let right = '360px';
+      let pushRight = '0px';
+      pushSideBar(right);
+      pushAsideTopMenu(pushRight);
+      pushAsideImage(pushRight);
+      let info = document.getElementsByClassName('info')[0];
+      info.setAttribute('onclick', 'showDetailSideBar()');
+    }
+    function pushSideBar(right) {
       let className = 'sideBar';
       let sideBar = document.getElementsByClassName(className)[0];
+      sideBar.style.transform = 'translate3d(' + right + ', 0, 0)';
+    }
+    function pushAsideTopMenu(right) {
       let topMenuName = 'SmZ4Wd';
       let topMenu = document.getElementsByClassName(topMenuName)[0];
+      topMenu.style.right = right;
+    }
+    function pushAsideImage(right) {
       let imageDivName = 'VmkiKe';
       let imageDiv = document.getElementsByClassName(imageDivName)[0];
-      sideBar.style.transform = 'translate3d(360px, 0, 0)';
-      topMenu.style.right = '0px';
-      imageDiv.style.right = '0px';
-      if (element === undefined) {
-        element = document.getElementsByClassName('info')[0];
-      }
-      element.setAttribute('onclick', 'showSideBar(this, "' + className + '")');
+      imageDiv.style.right = right;
     }
     function changeMemoryInfo(info, memoryId) {
       var json = {"memoryId" : memoryId, "info" : info}
@@ -429,7 +439,6 @@
     function resize(element) {
       element.style.height = "1px";
       element.style.height = (12 + element.scrollHeight) + "px";
-      console.log($(element).prop('scrollHeight'));
     }
     function showMap(gps) {
       if (gps != null) {
@@ -437,10 +446,9 @@
         var longitude = gps.longitude;
         showAddress(latitude, longitude);  // 주소 표시 함수
         var map = makeMap(latitude, longitude);
-        drawMarker(latitude, longitude, map);
+        drawMarker(latitude, longitude, map, 'start');
       }
     }
-
     function makeMap(latitude, longitude) {
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
@@ -451,12 +459,27 @@
         return new kakao.maps.Map(mapContainer, mapOption);
     }
 
-    function drawMarker(latitude, longitude, map) {
+    function drawMarker(latitude, longitude, map, opt) {
         var markerPosition  = new kakao.maps.LatLng(latitude, longitude);
+
+        var imageSrc = '';
+
+        if (opt == 'start') {
+//          imageSrc = '../../../images/start_marker.png';
+        }
+
+        if (opt == 'last') {
+//          imageSrc = '../../../images/arrival_marker.png';
+        }
+
+//        var imageSize = new kakao.maps.Size(64, 69); // 마커이미지의 크기입니다
+//        var imageOption = {offset: new kakao.maps.Point(27, 69)};
+//        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
-            position: markerPosition
+            position : markerPosition
+//            image : markerImage
         });
 
         // 마커가 지도 위에 표시되도록 설정합니다
@@ -466,13 +489,175 @@
     function showWalkMap(dataList) {
       var latitude = 37.53650277777778; // 초기값
       var longitude = 126.950225; // 초기값
-      for (var i = 0; i < dataList.length; i++) {
-        latitude = dataList[i].gps.latitude;
-        longitude = dataList[i].gps.longitude;
+      if (dataList.length > 0) {
+        var map = makeMap(dataList[dataList.length - 1].gps.latitude, dataList[dataList.length - 1].gps.longitude);
+        var linePath = [];
+        for (var index in dataList) {
+          latitude = dataList[index].gps.latitude;
+          longitude = dataList[index].gps.longitude;
+          var circle = drawCircle(new kakao.maps.LatLng(latitude, longitude), map);
+          clickPolygonEvent(map, circle, dataList[index].memoryId);
+          makeChangeColor(circle, 'red', 'blue');
+          linePath.push(new kakao.maps.LatLng(latitude, longitude));
+        }
+        drawLine(linePath, map);
+      } else {
+        var map = makeMap(latitude, longitude);
       }
-      var map = makeMap(latitude, longitude);
-      drawMarker(latitude, longitude, map);
-      console.log(dataList);
+      //drawMarker(latitude, longitude, map, 'last');
+    }
+
+    function drawCircle(center, map) {
+      var circle = new kakao.maps.Circle({
+          center : center,  // 원의 중심좌표 입니다
+          radius: 8, // 미터 단위의 원의 반지름입니다
+          strokeWeight: 3, // 선의 두께입니다
+          strokeColor: 'blue', // 선의 색깔입니다
+          strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+          strokeStyle: 'line', // 선의 스타일 입니다
+          fillColor: 'blue', // 채우기 색깔입니다
+          fillOpacity: 1,  // 채우기 불투명도 입니다
+          zIndex: 2
+      });
+
+      // 지도에 원을 표시합니다
+      circle.setMap(map);
+
+      return circle;
+    }
+
+    function makeChangeColor(polygon, overColor, outColor) {
+      // 다각형에 마우스오버 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+      var mouseoverOption = {
+          fillColor: overColor, // 채우기 색깔입니다
+          fillOpacity: 1 // 채우기 불투명도 입니다
+      };
+
+      // 다각형에 마우스아웃 이벤트가 발생했을 때 변경할 채우기 옵션입니다
+      var mouseoutOption = {
+          fillColor: outColor, // 채우기 색깔입니다
+          fillOpacity: 1 // 채우기 불투명도 입니다
+      };
+
+      // 다각형에 마우스오버 이벤트를 등록합니다
+      kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+          // 다각형의 채우기 옵션을 변경합니다
+          polygon.setOptions(mouseoverOption);
+      });
+
+      kakao.maps.event.addListener(polygon, 'mouseout', function(mouseEvent) {
+          // 다각형의 채우기 옵션을 변경합니다
+          polygon.setOptions(mouseoutOption);
+      });
+    }
+
+    function moveCenter(map, polygon) {
+      map.panTo(polygon.getPosition());
+    }
+
+    function clickPolygonEvent(map, polygon, memoryId) {
+      kakao.maps.event.addListener(polygon, 'click', function() {
+        moveCenter(map, polygon);
+        showWalkInfo(memoryId);
+        showWalkSideBar(memoryId);
+      });
+    }
+    function getTranslate3d (el) {
+      var values = el.style.transform.split(/\w+\(|\);?/);
+      if (!values[1] || !values[1].length) {
+          return [];
+      }
+      return values[1].split(/,\s?/g).map(parseInt);
+    }
+    function showWalkSideBar(memoryId) {
+      let right = '0px';
+      let pushRight = '360px';
+      pushSideBar(right);
+      let info = document.getElementsByClassName('ajQY2')[0];
+      info.setAttribute('onchange', 'changeMemoryInfo(this.value, ' + memoryId + ')');
+    }
+
+    function hideWalkSideBar() {
+      let right = '430px';
+      let pushRight = '0px';
+      pushSideBar(right);
+      pushAsideTopMenu(pushRight);
+      pushAsideImage(pushRight);
+    }
+
+    function showWalkInfo(memoryId) {
+      $.ajax({
+        url : "/memories/walk/info/" + memoryId,
+        type : "get",
+        success : function(data) {
+          if (data == null) {
+            alert('Error');
+          } else {
+            // info 보여주기
+            let info = document.getElementsByClassName('ajQY2')[0];
+            info.value = data.info;
+            // imageTime 보여주기
+            let date = changeDateFormat(data.imageTime);
+            let dayName = getDay(data.imageTime);
+            document.getElementById('date').innerText = date;
+            document.getElementById('day').innerText = dayName;
+            // uploadFileName 보여주기
+            document.getElementById('uploadFileName').innerText = data.uploadFile.uploadFileName;
+            // imageSize 보여주기
+            if (data.imageSize != null) {
+              document.getElementById('imageSize').innerText = data.imageSize.width + 'x' + data.imageSize.height;
+            }
+            showAddress(data.gps.latitude, data.gps.longitude);
+            document.getElementById('image').src = '/images/' + data.uploadFile.saveFileName;
+            // address는 일단 보류하고 마지막에 하기
+          }
+        },
+        error: function(xhr, status, error){
+           alert(xhr.responseText);
+        },
+      });
+    }
+
+    function changeDateFormat(imageTime) {
+      if (imageTime == null) {
+        return '';
+      }
+      let date = new Date(imageTime);
+      let yearName = date.getFullYear() + '년';
+      let monthName = months[date.getMonth()];
+      let day = date.getDate() + "일";
+      let timeOpt = date.getHours() < 12 ? "오전 " : "오후 ";
+      let hour = date.getHours() > 12 ? date.getHours() == 24 ? 0 : date.getHours() - 12 : date.getHours();
+      let hourName = timeOpt + hour;
+      let minuteName = date.getMinutes();
+      let secondName = date.getSeconds();
+      return [[yearName, monthName, day].join(' '), [hourName, minuteName, secondName].join(':')].join(' ');
+    }
+
+    function getDay(imageTime) {
+      if (imageTime == null) {
+        return '';
+      }
+      let date = new Date(imageTime);
+      return days[date.getDay()];
+    }
+
+    function drawLine(linePath, map) {
+      if (linePath.length > 1) {
+        // 지도에 표시할 선을 생성합니다
+        var polyline = new kakao.maps.Polyline({
+            //endArrow: true, // 화살표 표시
+            path: linePath, // 선을 구성하는 좌표배열 입니다
+            strokeWeight: 5, // 선의 두께 입니다
+            strokeColor: 'blue', // 선의 색깔입니다
+            strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeStyle: 'solid', // 선의 스타일입니다
+            zIndex: 1
+        });
+
+        // 지도에 선을 표시합니다
+        polyline.setMap(map);
+      }
     }
 
     function showAddress(x, y) {
@@ -496,9 +681,6 @@
         $('.n4jc2d').html(textVal);
         $('.n4jc2d').css('height', 'auto');
         $(this).height($('.n4jc2d').prop('scrollHeight'));
-        console.log($('.n4jc2d').val());
-        console.log($('.n4jc2d').prop('scrollHeight'));
-        console.log($(this).prop('scrollHeight'));
       });
     });*/
   </script>

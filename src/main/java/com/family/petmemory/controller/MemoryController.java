@@ -110,9 +110,9 @@ public class MemoryController {
         return "/memories/walk";
     }
 
-    @PostMapping("/walk/info")
+    @GetMapping("/walk/info/{memoryId}")
     @ResponseBody
-    public MemoryWalkInfoDto showWalkInfo(@RequestBody Long memoryId) {
+    public MemoryWalkInfoDto showWalkInfo(@PathVariable Long memoryId) {
         return memoryService.showMemoryWalkInfo(memoryId);
     }
 }

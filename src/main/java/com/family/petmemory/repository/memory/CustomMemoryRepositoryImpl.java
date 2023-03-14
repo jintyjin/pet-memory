@@ -72,7 +72,7 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
         return jpaQueryFactory
                 .select(
                         new QMemoryWalkInfoDto(
-                                memory.id, memory.info, memory.manageTime.imageTime, memory.uploadFile, memory.imageSize
+                                memory.id, memory.info, memory.manageTime.imageTime, memory.uploadFile, memory.imageSize, memory.gps
                         )
                 )
                 .from(memory)

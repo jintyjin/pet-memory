@@ -1,5 +1,6 @@
 package com.family.petmemory.entity.dto;
 
+import com.family.petmemory.entity.memory.Gps;
 import com.family.petmemory.entity.memory.ImageSize;
 import com.family.petmemory.entity.memory.UploadFile;
 import com.querydsl.core.annotations.QueryProjection;
@@ -20,12 +21,15 @@ public class MemoryWalkInfoDto {
 
     private ImageSize imageSize;
 
+    private Gps gps;
+
     @QueryProjection
-    public MemoryWalkInfoDto(Long memoryId, String info, LocalDateTime imageTime, UploadFile uploadFile, ImageSize imageSize) {
+    public MemoryWalkInfoDto(Long memoryId, String info, LocalDateTime imageTime, UploadFile uploadFile, ImageSize imageSize, Gps gps) {
         this.memoryId = memoryId;
         this.info = info;
         this.imageTime = imageTime;
         this.uploadFile = uploadFile;
         this.imageSize = imageSize;
+        this.gps = gps;
     }
 }
