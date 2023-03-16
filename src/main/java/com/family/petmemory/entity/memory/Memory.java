@@ -1,5 +1,6 @@
 package com.family.petmemory.entity.memory;
 
+import com.family.petmemory.entity.base.BaseTimeEntity;
 import com.family.petmemory.entity.pet.Pet;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class Memory {
+public class Memory extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "memory_id")
