@@ -21,11 +21,14 @@ public class Recipe {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
+    private Double percentage;
+
     protected Recipe() {
     }
 
-    public Recipe(Food food, Ingredient ingredient) {
+    public Recipe(Food food, Ingredient ingredient, Double percentage) {
         this.food = food;
         this.ingredient = ingredient;
+        this.percentage = percentage;
     }
 }
