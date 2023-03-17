@@ -32,7 +32,7 @@ class RecipeRepositoryTest {
         ingredientRepository.save(ingredient);
         Food food = new Food("사료1");
         foodRepository.save(food);
-        Recipe recipe = new Recipe(food, ingredient);
+        Recipe recipe = new Recipe(food, ingredient, 56.08);
 
         //when
         Recipe savedRecipe = recipeRepository.save(recipe);
