@@ -34,7 +34,7 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                         memoryTypeEq(condition.getMemoryType())
                 )
                 .limit(MAX_COUNT)
-                .orderBy(memory.manageTime.uploadTime.desc(), memory.id.asc())
+                .orderBy(memory.manageTime.imageTime.desc(), memory.id.asc())
                 .fetch();
     }
 
