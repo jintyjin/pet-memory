@@ -9,9 +9,10 @@
     <script th:inline="javascript">
         window.onload = showWalkMap([[${memoryWalkForms}]]);
     </script>
+    <!-- 점 클릭 시 나오는 정보 시작 -->
     <div class="sideBar">
         <div>
-            <!-- 정보 시작 -->
+            <!-- 타이틀 시작 -->
             <div class="IMbeAf">
                 <span th:text="#{detail.sideBar.header}"></span>
                 <button class="VfPpkd-Bz112c-LgbsSe yHy1rc" th:onclick="pushSideBar('360px');">
@@ -20,7 +21,7 @@
                     </svg>
                 </button>
             </div>
-            <!-- 정보 종료 -->
+            <!-- 타이틀 종료 -->
             <!-- 설명 추가 시작 -->
             <div class="Ds1Fic">
                 <div class="zE2Vqb">
@@ -33,6 +34,7 @@
                 </div>
             </div>
             <!-- 설명 추가 종료 -->
+            <!-- 세부 정보 시작-->
             <div class="Ds1Fic y1qTyb">
                 <div class="wiOkb" th:text="#{detail.sideBar.label.info}"></div>
                 <dl class="cdLvR">
@@ -91,7 +93,32 @@
                     </div>
                 </dl>
             </div>
+            <!-- 세부 정보 종료 -->
         </div>
     </div>
+    <!-- 점 클릭 시 나오는 정보 종료 -->
+    <!-- 경로 검색 창 시작 -->
+    <div class="searchBar">
+        <div>
+            <!-- 반려 동물 이름 시작 -->
+            <div class="searchPetName">
+                <span th:text="|${profileForm.name}#{walk.searchBar.walk}|"></span>
+            </div>
+            <!-- 반려 동물 이름 종료 -->
+            <!-- 검색 일자 시작 -->
+            <div class="searchDate">
+                <label for="startTime" class="form-label" th:text="#{walk.searchBar.searchDate}">검색 일자</label>
+                <div>
+                    <input type="date" id="startTime" name="startTime" class="form-control" />
+                    &nbsp;
+                    <span>~</span>
+                    &nbsp;
+                    <input type="date" id="endTime" name="endTime" class="form-control" />
+                </div>
+            </div>
+            <!-- 검색 일자 종료 -->
+        </div>
+    </div>
+    <!-- 경로 검색 창 종료 -->
 </body>
 </html>
