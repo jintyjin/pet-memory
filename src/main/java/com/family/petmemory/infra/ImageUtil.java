@@ -7,7 +7,6 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 import com.family.petmemory.entity.memory.Gps;
-import com.family.petmemory.entity.memory.ImageSize;
 import com.family.petmemory.entity.memory.MemoryType;
 
 import javax.imageio.ImageIO;

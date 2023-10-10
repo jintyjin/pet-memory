@@ -44,4 +44,10 @@ public class MessageSourceTest {
     void enLang() {
         assertThat(messageSource.getMessage("label.member.password", null, Locale.ENGLISH)).isEqualTo("PASSWORD");
     }
+
+    @Test
+    void enumLang() {
+        assertThat(messageSource.getMessage("BEEF", null, Locale.KOREAN)).isEqualTo("소고기");
+        assertThat(messageSource.getMessage("BEEF", null, Locale.ENGLISH)).isEqualTo("Beef");
+    }
 }

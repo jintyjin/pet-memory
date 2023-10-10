@@ -1,11 +1,10 @@
 package com.family.petmemory.entity.dto;
 
 import com.family.petmemory.entity.memory.Gps;
-import com.family.petmemory.entity.memory.ImageSize;
+import com.family.petmemory.infra.ImageSize;
 import com.family.petmemory.entity.memory.MemoryStatus;
 import com.family.petmemory.entity.memory.MemoryType;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -6,11 +6,10 @@ import com.family.petmemory.entity.dto.MemoryWalkInfoDto;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
-import com.family.petmemory.repository.member.JpaMemberRepository;
+import com.family.petmemory.infra.ImageSize;
+import com.family.petmemory.infra.UploadFile;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;
-import com.family.petmemory.repository.pet.PetRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

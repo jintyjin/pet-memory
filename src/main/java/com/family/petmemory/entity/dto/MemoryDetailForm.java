@@ -1,8 +1,8 @@
 package com.family.petmemory.entity.dto;
 
 import com.family.petmemory.entity.memory.Gps;
-import com.family.petmemory.entity.memory.ImageSize;
-import com.family.petmemory.entity.memory.UploadFile;
+import com.family.petmemory.infra.ImageSize;
+import com.family.petmemory.infra.UploadFile;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 

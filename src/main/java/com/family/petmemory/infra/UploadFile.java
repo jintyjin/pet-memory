@@ -1,4 +1,4 @@
-package com.family.petmemory.entity.memory;
+package com.family.petmemory.infra;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

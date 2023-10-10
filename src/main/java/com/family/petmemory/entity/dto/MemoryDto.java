@@ -1,6 +1,6 @@
 package com.family.petmemory.entity.dto;
 
-import com.family.petmemory.entity.memory.UploadFile;
+import com.family.petmemory.infra.UploadFile;
 import com.family.petmemory.entity.pet.Pet;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

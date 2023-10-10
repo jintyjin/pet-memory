@@ -4,6 +4,7 @@ import com.drew.imaging.ImageProcessingException;
 import com.family.petmemory.entity.dto.*;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.infra.ImageSize;
 import com.family.petmemory.infra.ImageUtil;
 import com.family.petmemory.repository.memory.DataJpaMemoryRepository;
 import com.family.petmemory.repository.pet.DataJpaPetRepository;

@@ -104,8 +104,10 @@ public class MemoryController {
     @GetMapping("/walk/{petId}")
     public String walk(@PathVariable Long petId, Model model) {
         List<MemoryWalkForm> memoryWalkForms = memoryService.showMemoryWalk(petId);
+        PetProfileForm profileForm = petService.findMyPet(petId);
 
         model.addAttribute("memoryWalkForms", memoryWalkForms);
+        model.addAttribute("profileForm", profileForm);
 
         return "/memories/walk";
     }

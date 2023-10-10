@@ -2,6 +2,8 @@ package com.family.petmemory.entity.memory;
 
 import com.family.petmemory.entity.base.BaseTimeEntity;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.infra.ImageSize;
+import com.family.petmemory.infra.UploadFile;
 import lombok.Getter;
 
 import javax.persistence.*;

@@ -3,22 +3,19 @@ package com.family.petmemory.repository.memory;
 import com.family.petmemory.entity.memory.*;
 import com.family.petmemory.entity.member.Member;
 import com.family.petmemory.entity.pet.Pet;
+import com.family.petmemory.infra.ImageSize;
+import com.family.petmemory.infra.UploadFile;
 import com.family.petmemory.repository.member.MemberRepository;
 import com.family.petmemory.repository.pet.PetRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
