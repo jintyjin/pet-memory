@@ -330,6 +330,12 @@
     /* walk.html 종료 */
   </style>
   <script>
+    /* 변수 시작*/
+    var map = null;
+    var circles = null;
+    var linePath = null;
+    /* 변수 종료*/
+    /* 함수 시작 */
     /* 월 */
     let months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
     /* 요일 */
@@ -520,15 +526,17 @@
     function showWalkMap(dataList) {
       var latitude = 37.53650277777778; // 초기값
       var longitude = 126.950225; // 초기값
+      circles = [];
+      linePath = [];
       if (dataList.length > 0) {
-        var map = makeMap(dataList[dataList.length - 1].gps.latitude, dataList[dataList.length - 1].gps.longitude);
-        var linePath = [];
+        map = makeMap(dataList[dataList.length - 1].gps.latitude, dataList[dataList.length - 1].gps.longitude);
         for (var index in dataList) {
           latitude = dataList[index].gps.latitude;
           longitude = dataList[index].gps.longitude;
           var circle = drawCircle(new kakao.maps.LatLng(latitude, longitude), map);
           clickPolygonEvent(map, circle, dataList[index].memoryId);
           makeChangeColor(circle, 'red', 'blue');
+          circles.push(circle);
           linePath.push(new kakao.maps.LatLng(latitude, longitude));
         }
         drawLine(linePath, map);
@@ -714,6 +722,7 @@
         $(this).height($('.n4jc2d').prop('scrollHeight'));
       });
     });*/
+    /* 함수 종료 */
   </script>
 </head>
 <body>
