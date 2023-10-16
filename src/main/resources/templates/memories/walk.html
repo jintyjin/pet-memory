@@ -117,11 +117,15 @@
                 </div>
             </div>
             <div>
-                <button class="w-100 btn btn-primary" th:text="#{button.walk.search}"></button>
+                <button class="w-100 btn btn-primary" th:text="#{button.walk.search}" th:onclick="searchWalkData();"></button>
             </div>
             <!-- 검색 일자 종료 -->
         </div>
     </div>
     <!-- 경로 검색 창 종료 -->
+    <script>
+        document.getElementById('startTime').valueAsDate = new Date();
+        document.getElementById('endTime').valueAsDate = new Date();
+    </script>
 </body>
 </html>
