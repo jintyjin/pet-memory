@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,7 +105,7 @@ public class MemoryController {
 
     @GetMapping("/walk/{petId}")
     public String walk(@PathVariable Long petId, Model model) {
-        List<MemoryWalkForm> memoryWalkForms = memoryService.showMemoryWalk(petId);
+        List<MemoryWalkForm> memoryWalkForms = memoryService.showMemoryWalk(petId, LocalDate.now(), LocalDate.now());
         PetProfileForm profileForm = petService.findMyPet(petId);
 
         model.addAttribute("memoryWalkForms", memoryWalkForms);

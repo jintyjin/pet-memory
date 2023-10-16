@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -122,8 +123,8 @@ public class MemoryService {
         return response.get();
     }
 
-    public List<MemoryWalkForm> showMemoryWalk(Long petId) {
-        return memoryRepository.findMemoryWalk(petId);
+    public List<MemoryWalkForm> showMemoryWalk(Long petId, LocalDate startDate, LocalDate endDate) {
+        return memoryRepository.findMemoryWalk(petId, startDate, endDate);
     }
 
     public MemoryWalkInfoDto showMemoryWalkInfo(Long memoryId) {

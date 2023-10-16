@@ -6,6 +6,7 @@ import com.family.petmemory.entity.dto.MemoryWalkForm;
 import com.family.petmemory.entity.dto.MemoryWalkInfoDto;
 import com.family.petmemory.entity.memory.Memory;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CustomMemoryRepository {
@@ -13,7 +14,7 @@ public interface CustomMemoryRepository {
 
     MemoryDetailForm findMemoryDetail(Long memoryId);
 
-    List<MemoryWalkForm> findMemoryWalk(Long petId);
+    List<MemoryWalkForm> findMemoryWalk(Long petId, LocalDate startDate, LocalDate endDate);
 
     MemoryWalkInfoDto findMemoryWalkInfo(Long memoryId);
 }

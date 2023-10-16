@@ -9,6 +9,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static com.family.petmemory.entity.memory.QMemory.memory;
@@ -51,7 +53,7 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
     }
 
     @Override
-    public List<MemoryWalkForm> findMemoryWalk(Long petId) {
+    public List<MemoryWalkForm> findMemoryWalk(Long petId, LocalDate startDate, LocalDate endDate) {
         return jpaQueryFactory
                 .select(new QMemoryWalkForm(
                         memory.id, memory.uploadFile.saveFileName, memory.manageTime.imageTime,
@@ -61,10 +63,15 @@ public class CustomMemoryRepositoryImpl implements CustomMemoryRepository {
                 .where(
                         memory.pet.id.eq(petId),
                         memory.memoryType.eq(MemoryType.IMAGE),
-                        memory.gps.isNotNull()
+                        memory.gps.isNotNull(),
+                        betweenDate(startDate, endDate)
                 )
                 .orderBy(memory.manageTime.imageTime.asc())
                 .fetch();
+    }
+
+    private BooleanExpression betweenDate(LocalDate startDate, LocalDate endDate) {
+        return memory.manageTime.imageTime.between(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 
     @Override
