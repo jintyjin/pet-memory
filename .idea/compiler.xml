@@ -12,5 +12,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
+    </annotationProcessing>
   </component>
 </project>
